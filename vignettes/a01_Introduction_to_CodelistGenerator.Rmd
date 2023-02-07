@@ -1,0 +1,244 @@
+---
+title: "Introduction to CodelistGenerator"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{01_Introduction_to_CodelistGenerator}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Creating a codelist for dementia
+For this example we are going to generate a candidate codelist for dementia, only looking for codes in the condition domain. Let's first load some libraries
+
+```{r,  message=FALSE, warning=FALSE,echo=FALSE}
+library(here)
+library(readr)
+library(DBI)
+library(here)
+library(dplyr)
+library(stringr)
+library(DT)
+library(kableExtra)
+library(CodelistGenerator)
+library(CDMConnector)
+```
+
+## Connect to the OMOP CDM vocabularies
+CodelistGenerator works with a `cdm_reference` to the vocabularies tables of the OMOP CDM using the CDMConnector package. This `cdm_reference` could be to the tables in a database, using an arrow_table, or loaded into R. CodelistGenerator will generally work fastest with an arrow_table so let's first set that up.
+
+```{r, eval=FALSE}
+# example with postgres database connection details
+db <- DBI::dbConnect(RPostgres::Postgres(),
+  dbname = Sys.getenv("server"),
+  port = Sys.getenv("port"),
+  host = Sys.getenv("host"),
+  user = Sys.getenv("user"),
+  password = Sys.getenv("password")
+)
+# name of vocabulary schema
+vocabularyDatabaseSchema <- Sys.getenv("vocabulary_schema")
+
+# create cdm reference
+cdm <- CDMConnector::cdm_from_con(
+  con = db,
+  cdm_schema = vocabularyDatabaseSchema,
+  cdm_tables = tidyselect::all_of(c(
+    "concept",
+    "concept_relationship",
+    "concept_ancestor",
+    "concept_synonym",
+    "vocabulary"
+  ))
+)
+# vocab to arrow
+# save in temp folder for this example
+dOut <- here(tempdir(), "db_vocab")
+dir.create(dOut)
+CDMConnector::stow(cdm, dOut)
+
+# new cdm reference using arrow
+cdmArrow <- CDMConnector::cdm_from_files(
+  path = dOut,
+  cdm_tables = tidyselect::all_of(c(
+    "concept",
+    "concept_relationship",
+    "concept_ancestor",
+    "concept_synonym",
+    "vocabulary"
+  )),
+  as_data_frame = FALSE
+)
+
+rm(cdm)
+```
+
+
+## Check version of the vocabularies
+It is important to note that the results from CodelistGenerator will be specific to a particular version of the OMOP CDM vocabularies. We can see the version of the vocabulary being used like so
+```{r, eval=FALSE}
+getVocabVersion(cdm = cdmArrow)
+```
+
+```{r,  message=FALSE, warning=FALSE,echo=FALSE}
+vocabVersion <- readRDS(here("vignettes", "introVocab.RData"))
+vocabVersion
+```
+
+## Codelist from "Dementia" (4182210) and its descendants
+The simplest approach to identifying potential codes is to take a high-level code and include all its descendants. 
+
+
+```{r, eval=FALSE}
+codesFromDescendants <- tbl(
+  db,
+  sql(paste0(
+    "SELECT * FROM ",
+    vocabularyDatabaseSchema,
+    ".concept_ancestor"
+  ))
+) %>%
+  filter(ancestor_concept_id == "4182210") %>%
+  select("descendant_concept_id") %>%
+  rename("concept_id" = "descendant_concept_id") %>%
+  left_join(tbl(db, sql(paste0(
+    "SELECT * FROM ",
+    vocabularyDatabaseSchema,
+    ".concept"
+  )))) %>%
+  select(
+    "concept_id", "concept_name",
+    "domain_id", "vocabulary_id"
+  ) %>%
+  collect()
+```
+
+```{r,  message=FALSE, warning=FALSE,echo=FALSE}
+codesFromDescendants <- readRDS(here("vignettes", "introData01.RData"))
+```
+
+```{r,  message=FALSE, warning=FALSE }  
+datatable(codesFromDescendants,
+  rownames = FALSE,
+  options = list(
+    pageLength = 10,
+    lengthMenu = c(10, 20, 50)
+  )
+)
+```
+
+This looks to pick up most relevant codes. But, this approach misses codes that are not a descendant of 4182210. For example, codes such as "Wandering due to dementia" (37312577; https://athena.ohdsi.org/search-terms/terms/37312577) and "Anxiety due to dementia" (37312031; https://athena.ohdsi.org/search-terms/terms/37312031) are not picked up.
+
+## Generating a candidate codelist using CodelistGenerator
+To try and include all such terms that could be included we can use CodelistGenerator.
+
+First, let's do a simple search for a single keyword of "dementia", including descendants of the identified codes.
+```{r, eval=FALSE }
+dementiaCodes1 <- getCandidateCodes(
+  cdm = cdm,
+  keywords = "dementia",
+  domains = "Condition",
+  includeDescendants = TRUE
+)
+```
+
+```{r,  message=FALSE, warning=FALSE,echo=FALSE}
+dementiaCodes1 <- readRDS(here("vignettes", "introData02.RData"))
+```
+
+```{r,  message=FALSE, warning=FALSE }
+datatable(dementiaCodes1,
+  rownames = FALSE,
+  options = list(
+    pageLength = 10,
+    lengthMenu = c(10, 20, 50)
+  )
+)
+```
+
+What is the difference between this codelist and the one from 4182210 and its descendants?
+```{r,  eval=FALSE }
+codeComparison <- compareCodelists(
+  codesFromDescendants,
+  dementiaCodes1
+)
+```
+
+```{r,  message=FALSE, warning=FALSE,echo=FALSE}
+codeComparison <- readRDS(here("vignettes", "introData03.RData"))
+```
+
+```{r,  message=FALSE, warning=FALSE } 
+kable(codeComparison %>%
+  group_by(codelist) %>%
+  tally())
+```
+
+What are these extra codes picked up by CodelistGenerator?
+```{r,  message=FALSE, warning=FALSE }
+datatable(
+  codeComparison %>%
+    filter(codelist == "Only codelist 2"),
+  rownames = FALSE,
+  options = list(
+    pageLength = 10,
+    lengthMenu = c(10, 20, 50)
+  )
+)
+```
+
+## Review mappings from non-standard vocabularies
+Perhaps we want to see what ICD10CM codes map to our candidate codelist. We can get these by running
+
+```{r,  message=FALSE, warning=FALSE,echo=FALSE}
+icdMappings <- readRDS(here("vignettes", "introData04.RData"))
+```
+
+```{r,  eval=FALSE }
+icdMappings <- getMappings(
+  cdm = cdm,
+  candidateCodelist = dementiaCodes1,
+  nonStandardVocabularies = "ICD10CM"
+)
+```
+
+```{r,  message=FALSE, warning=FALSE }
+datatable(icdMappings,
+  rownames = FALSE,
+  options = list(
+    pageLength = 10,
+    lengthMenu = c(10, 20, 50)
+  )
+)
+```
+
+
+```{r,  message=FALSE, warning=FALSE,echo=FALSE}
+readMappings <- readRDS(here("vignettes", "introData05.RData"))
+```
+
+```{r,  eval=FALSE }
+readMappings <- getMappings(
+  cdm = cdm,
+  candidateCodelist = dementiaCodes1,
+  nonStandardVocabularies = "Read"
+)
+```
+
+```{r,  message=FALSE, warning=FALSE }
+datatable(readMappings,
+  rownames = FALSE,
+  options = list(
+    pageLength = 10,
+    lengthMenu = c(10, 20, 50)
+  )
+)
+```
