@@ -402,18 +402,31 @@ include all their descendants.</p>
 </div>
 <div id="restrict-on-dose-form" class="section level2">
 <h2>Restrict on dose form</h2>
-<p>We can also restrict on dose form, in this case requiring dose form
-to include either “injection” or “intravenous” in it’s name</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>acetaminophen2 <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm_arrow,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">keywords =</span> <span class="st">&quot;acetaminophen&quot;</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">domains =</span> <span class="st">&quot;drug&quot;</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">doseForm =</span> <span class="fu">c</span>(<span class="st">&quot;injection&quot;</span>, <span class="st">&quot;intravenous&quot;</span>),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardConcept =</span> <span class="st">&quot;standard&quot;</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>acetaminophen2 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span>
+<p>We can also restrict on dose form. In this case we can specify
+“injection” or “intravenous” either in the keywords or by using the dose
+form option.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>acetaminophen2a <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">keywords =</span> <span class="fu">c</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;acetaminophen injection&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;acetaminophen intravenous&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">domains =</span> <span class="st">&quot;drug&quot;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardConcept =</span> <span class="st">&quot;standard&quot;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>acetaminophen2b <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">keywords =</span> <span class="st">&quot;acetaminophen&quot;</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">domains =</span> <span class="st">&quot;drug&quot;</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">doseForm =</span> <span class="fu">c</span>(<span class="st">&quot;injection&quot;</span>, <span class="st">&quot;intravenous&quot;</span>),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardConcept =</span> <span class="st">&quot;standard&quot;</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>acetaminophen2a <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 127</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 15</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_id                  &lt;int&gt; 740261, 19112656, 21029938, 21049585, 2105…</span></span>
@@ -430,40 +443,262 @@ to include either “injection” or “intravenous” in it’s name</p>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ denominator_value           &lt;dbl&gt; 50, 100, 100, 100, 100, NA, 100, 100, NA, …</span></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ denominator_unit_concept_id &lt;int&gt; 8587, 8587, 8587, 8587, 8587, 8587, 8587, …</span></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ box_size                    &lt;int&gt; NA, NA, 10, 12, 10, 12, NA, 12, NA, 10, 10…</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ dose_form                   &lt;chr&gt; &quot;Injection&quot;, &quot;Injection&quot;, &quot;Injection&quot;, &quot;In…</span></span></code></pre></div>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ dose_form                   &lt;chr&gt; &quot;Injection&quot;, &quot;Injection&quot;, &quot;Injection&quot;, &quot;In…</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>acetaminophen2b <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 127</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 15</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_id                  &lt;int&gt; 740261, 19112656, 21029938, 21049585, 2105…</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_name                &lt;chr&gt; &quot;50 ML acetaminophen 10 MG/ML Injection&quot;, …</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ domain_id                   &lt;chr&gt; &quot;drug&quot;, &quot;drug&quot;, &quot;drug&quot;, &quot;drug&quot;, &quot;drug&quot;, &quot;d…</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_class_id            &lt;chr&gt; &quot;quant clinical drug&quot;, &quot;quant clinical dru…</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ vocabulary_id               &lt;chr&gt; &quot;rxnorm&quot;, &quot;rxnorm&quot;, &quot;rxnorm extension&quot;, &quot;r…</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ found_from                  &lt;chr&gt; &quot;From initial search&quot;, &quot;From initial searc…</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ ingredient_concept_id       &lt;int&gt; 1125315, 1125315, 1125315, 1125315, 112531…</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ amount_value                &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ amount_unit_concept_id      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, 8576, NA, …</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ numerator_value             &lt;dbl&gt; 500, 1000, 1000, 1000, 1000, 10, 1000, 100…</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ numerator_unit_concept_id   &lt;int&gt; 8576, 8576, 8576, 8576, 8576, 8576, 8576, …</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ denominator_value           &lt;dbl&gt; 50, 100, 100, 100, 100, NA, 100, 100, NA, …</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ denominator_unit_concept_id &lt;int&gt; 8587, 8587, 8587, 8587, 8587, 8587, 8587, …</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ box_size                    &lt;int&gt; NA, NA, 10, 12, 10, 12, NA, 12, NA, 10, 10…</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ dose_form                   &lt;chr&gt; &quot;Injection&quot;, &quot;Injection&quot;, &quot;Injection&quot;, &quot;In…</span></span></code></pre></div>
+<p>In this case the two searches return the same result.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareCodelists</span>(acetaminophen2a, acetaminophen2b) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(codelist) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 2</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   codelist     n</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;    &lt;int&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Both       127</span></span></code></pre></div>
+<p>We can see all the dose forms that could be specified like so</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getDoseForm</span>(<span class="at">cdm =</span> cdm)</span></code></pre></div>
+<pre><code>#&gt;   [1] &quot;Prefilled Syringe&quot;                          
+#&gt;   [2] &quot;Injectable Solution&quot;                        
+#&gt;   [3] &quot;Oral Tablet&quot;                                
+#&gt;   [4] &quot;Oral Solution&quot;                              
+#&gt;   [5] &quot;Oral Capsule&quot;                               
+#&gt;   [6] &quot;Injection&quot;                                  
+#&gt;   [7] &quot;Powder Spray&quot;                               
+#&gt;   [8] &quot;Inhalation Solution&quot;                        
+#&gt;   [9] &quot;Oral Powder&quot;                                
+#&gt;  [10] &quot;Topical Ointment&quot;                           
+#&gt;  [11] &quot;Oral Granules&quot;                              
+#&gt;  [12] &quot;Transdermal System&quot;                         
+#&gt;  [13] &quot;Topical Gel&quot;                                
+#&gt;  [14] &quot;Topical Cream&quot;                              
+#&gt;  [15] &quot;Extended Release Oral Tablet&quot;               
+#&gt;  [16] &quot;Topical Solution&quot;                           
+#&gt;  [17] &quot;Extended Release Oral Capsule&quot;              
+#&gt;  [18] &quot;Ophthalmic Solution&quot;                        
+#&gt;  [19] &quot;Topical Lotion&quot;                             
+#&gt;  [20] &quot;Oral Suspension&quot;                            
+#&gt;  [21] &quot;Inhalation Powder&quot;                          
+#&gt;  [22] &quot;Nasal Solution&quot;                             
+#&gt;  [23] &quot;Delayed Release Oral Tablet&quot;                
+#&gt;  [24] &quot;Oral Ointment&quot;                              
+#&gt;  [25] &quot;Wound Cones&quot;                                
+#&gt;  [26] &quot;Injectable Suspension&quot;                      
+#&gt;  [27] &quot;Granules for Oral Suspension&quot;               
+#&gt;  [28] &quot;Toothpaste&quot;                                 
+#&gt;  [29] &quot;Pack&quot;                                       
+#&gt;  [30] &quot;Rectal Gel&quot;                                 
+#&gt;  [31] &quot;Chewing Gum&quot;                                
+#&gt;  [32] &quot;Rectal Ointment&quot;                            
+#&gt;  [33] &quot;Rectal Powder&quot;                              
+#&gt;  [34] &quot;Inhalation Spray&quot;                           
+#&gt;  [35] &quot;Tablet for Oral Suspension&quot;                 
+#&gt;  [36] &quot;Vaginal Film&quot;                               
+#&gt;  [37] &quot;Mucosal Spray&quot;                              
+#&gt;  [38] &quot;Nasal Powder&quot;                               
+#&gt;  [39] &quot;Otic Suspension&quot;                            
+#&gt;  [40] &quot;Intratracheal Suspension&quot;                   
+#&gt;  [41] &quot;Delayed Release Oral Capsule&quot;               
+#&gt;  [42] &quot;Paste&quot;                                      
+#&gt;  [43] &quot;Sublingual Film&quot;                            
+#&gt;  [44] &quot;Intravenous Solution&quot;                       
+#&gt;  [45] &quot;Intrathecal Suspension&quot;                     
+#&gt;  [46] &quot;Intramuscular Prolonged Release Suspension&quot; 
+#&gt;  [47] &quot;Intravenous Suspension&quot;                     
+#&gt;  [48] &quot;Vaginal Spray&quot;                              
+#&gt;  [49] &quot;Prefilled Applicator&quot;                       
+#&gt;  [50] &quot;Inhalant&quot;                                   
+#&gt;  [51] &quot;Intrauterine Drug Delivery System&quot;          
+#&gt;  [52] &quot;Sustained Release Buccal Tablet&quot;            
+#&gt;  [53] &quot;Otic Ointment&quot;                              
+#&gt;  [54] &quot;Vaginal Ointment&quot;                           
+#&gt;  [55] &quot;Augmented Topical Gel&quot;                      
+#&gt;  [56] &quot;Augmented Topical Lotion&quot;                   
+#&gt;  [57] &quot;Augmented Topical Ointment&quot;                 
+#&gt;  [58] &quot;Intraperitoneal Solution&quot;                   
+#&gt;  [59] &quot;Impregnated cigarette&quot;                      
+#&gt;  [60] &quot;Nasal Metered-Dose Aerosol&quot;                 
+#&gt;  [61] &quot;Powder for Nasal Solution&quot;                  
+#&gt;  [62] &quot;Collodion&quot;                                  
+#&gt;  [63] &quot;Dental Pin&quot;                                 
+#&gt;  [64] &quot;Chewable Bar&quot;                               
+#&gt;  [65] &quot;Medicated Gauzeball&quot;                        
+#&gt;  [66] &quot;Dressing Gauze&quot;                             
+#&gt;  [67] &quot;Topical Cake&quot;                               
+#&gt;  [68] &quot;Oral Tablet with Sensor&quot;                    
+#&gt;  [69] &quot;Powder for Pyelocalyceal Solution&quot;          
+#&gt;  [70] &quot;Vaginal Sponge&quot;                             
+#&gt;  [71] &quot;Enema&quot;                                      
+#&gt;  [72] &quot;Disintegrating Oral Tablet&quot;                 
+#&gt;  [73] &quot;Topical Spray&quot;                              
+#&gt;  [74] &quot;Ophthalmic Ointment&quot;                        
+#&gt;  [75] &quot;Buccal Film&quot;                                
+#&gt;  [76] &quot;Powder for Oral Solution&quot;                   
+#&gt;  [77] &quot;Sublingual Tablet&quot;                          
+#&gt;  [78] &quot;Oral Spray&quot;                                 
+#&gt;  [79] &quot;Mouthwash&quot;                                  
+#&gt;  [80] &quot;Oral Strip&quot;                                 
+#&gt;  [81] &quot;Oral Film&quot;                                  
+#&gt;  [82] &quot;Auto-Injector&quot;                              
+#&gt;  [83] &quot;Vaginal Cream&quot;                              
+#&gt;  [84] &quot;Granules for Oral Solution&quot;                 
+#&gt;  [85] &quot;Vaginal Gel&quot;                                
+#&gt;  [86] &quot;Topical Suspension&quot;                         
+#&gt;  [87] &quot;Effervescent Oral Tablet&quot;                   
+#&gt;  [88] &quot;Oral Cream&quot;                                 
+#&gt;  [89] &quot;Topical Foam&quot;                               
+#&gt;  [90] &quot;Rectal Solution&quot;                            
+#&gt;  [91] &quot;Nasal Ointment&quot;                             
+#&gt;  [92] &quot;Rectal Cream&quot;                               
+#&gt;  [93] &quot;Nasal Inhaler&quot;                              
+#&gt;  [94] &quot;Vaginal Insert&quot;                             
+#&gt;  [95] &quot;Kit for radiopharmaceutical preparation&quot;    
+#&gt;  [96] &quot;Metered Dose Nasal Spray&quot;                   
+#&gt;  [97] &quot;Delayed Release Oral Granules&quot;              
+#&gt;  [98] &quot;Oral Flakes&quot;                                
+#&gt;  [99] &quot;Powder&quot;                                     
+#&gt; [100] &quot;Unknown Combination Pack Medical Aids&quot;      
+#&gt; [101] &quot;Medicated nail lacquer&quot;                     
+#&gt; [102] &quot;Shower Powder&quot;                              
+#&gt; [103] &quot;Intravitreal Applicator&quot;                    
+#&gt; [104] &quot;Nasal Pin&quot;                                  
+#&gt; [105] &quot;Nasal Metered-Dose Pump&quot;                    
+#&gt; [106] &quot;Tablet for Opthalmic Solution&quot;              
+#&gt; [107] &quot;Vaginal Powder&quot;                             
+#&gt; [108] &quot;Nasal Aerosol, Metered Dose&quot;                
+#&gt; [109] &quot;Nasal Spray&quot;                                
+#&gt; [110] &quot;Oral Gel&quot;                                   
+#&gt; [111] &quot;Vaginal Ring&quot;                               
+#&gt; [112] &quot;Oral Paste&quot;                                 
+#&gt; [113] &quot;Medicated Patch&quot;                            
+#&gt; [114] &quot;Oral Lozenge&quot;                               
+#&gt; [115] &quot;Chewable Tablet&quot;                            
+#&gt; [116] &quot;Metered Dose Inhaler&quot;                       
+#&gt; [117] &quot;Mucous Membrane Topical Solution&quot;           
+#&gt; [118] &quot;Vaginal System&quot;                             
+#&gt; [119] &quot;Urethral Gel&quot;                               
+#&gt; [120] &quot;Dry Powder Inhaler&quot;                         
+#&gt; [121] &quot;Ophthalmic Gel&quot;                             
+#&gt; [122] &quot;Rectal Foam&quot;                                
+#&gt; [123] &quot;Cartridge&quot;                                  
+#&gt; [124] &quot;Medicated Shampoo&quot;                          
+#&gt; [125] &quot;Medicated Liquid Soap&quot;                      
+#&gt; [126] &quot;Stick&quot;                                      
+#&gt; [127] &quot;Irrigation Solution&quot;                        
+#&gt; [128] &quot;Oral Granules (Effervescents)&quot;              
+#&gt; [129] &quot;Oral Pellet&quot;                                
+#&gt; [130] &quot;Nasal Suspension&quot;                           
+#&gt; [131] &quot;Intrauterine System&quot;                        
+#&gt; [132] &quot;Vaginal Foam&quot;                               
+#&gt; [133] &quot;Nasal Gel&quot;                                  
+#&gt; [134] &quot;Douche&quot;                                     
+#&gt; [135] &quot;Jet Injector&quot;                               
+#&gt; [136] &quot;Rectal Spray&quot;                               
+#&gt; [137] &quot;Oil&quot;                                        
+#&gt; [138] &quot;Bar Soap&quot;                                   
+#&gt; [139] &quot;Bath Salts&quot;                                 
+#&gt; [140] &quot;Variable Drug Form&quot;                         
+#&gt; [141] &quot;Oral Gas&quot;                                   
+#&gt; [142] &quot;Medicated Tape&quot;                             
+#&gt; [143] &quot;Inhalation Suspension&quot;                      
+#&gt; [144] &quot;Powder for Oral Suspension&quot;                 
+#&gt; [145] &quot;Rectal Suppository&quot;                         
+#&gt; [146] &quot;Topical Powder&quot;                             
+#&gt; [147] &quot;Otic Solution&quot;                              
+#&gt; [148] &quot;Gas for Inhalation&quot;                         
+#&gt; [149] &quot;Ophthalmic Irrigation Solution&quot;             
+#&gt; [150] &quot;Buccal Tablet&quot;                              
+#&gt; [151] &quot;Topical Oil&quot;                                
+#&gt; [152] &quot;Ophthalmic Suspension&quot;                      
+#&gt; [153] &quot;Medicated Bar Soap&quot;                         
+#&gt; [154] &quot;Drug Implant&quot;                               
+#&gt; [155] &quot;Medicated Pad&quot;                              
+#&gt; [156] &quot;Extended Release Suspension&quot;                
+#&gt; [157] &quot;Medicated Nail Polish&quot;                      
+#&gt; [158] &quot;Vaginal Suppository&quot;                        
+#&gt; [159] &quot;Pen Injector&quot;                               
+#&gt; [160] &quot;Chewable Extended Release Oral Tablet&quot;      
+#&gt; [161] &quot;Ophthalmic Cream&quot;                           
+#&gt; [162] &quot;Paint&quot;                                      
+#&gt; [163] &quot;Vaginal Tablet&quot;                             
+#&gt; [164] &quot;Vaginal delivery system&quot;                    
+#&gt; [165] &quot;Intramuscular Solution&quot;                     
+#&gt; [166] &quot;Rectal Suspension&quot;                          
+#&gt; [167] &quot;Suspension&quot;                                 
+#&gt; [168] &quot;Nasal Inhalant&quot;                             
+#&gt; [169] &quot;Urethral Suppository&quot;                       
+#&gt; [170] &quot;Oral Wafer&quot;                                 
+#&gt; [171] &quot;Oral Foam&quot;                                  
+#&gt; [172] &quot;Augmented Topical Cream&quot;                    
+#&gt; [173] &quot;Sublingual Powder&quot;                          
+#&gt; [174] &quot;Cement&quot;                                     
+#&gt; [175] &quot;Nasal Cream&quot;                                
+#&gt; [176] &quot;Injectable Foam&quot;                            
+#&gt; [177] &quot;Subcutaneous Gel&quot;                           
+#&gt; [178] &quot;Vaginal Mechanical Pessaries with Substance&quot;
+#&gt; [179] &quot;Medicated Swab&quot;                             
+#&gt; [180] &quot;Medicated Cottonball&quot;                       
+#&gt; [181] &quot;Medicated Guaze&quot;                            
+#&gt; [182] &quot;Soft Tissue Injection Suspension&quot;           
+#&gt; [183] &quot;Poultice&quot;                                   
+#&gt; [184] &quot;Topical Liquefied Gas&quot;                      
+#&gt; [185] &quot;Subcutaneous Powder&quot;</code></pre>
 </div>
 <div id="restrict-on-concept-class" class="section level2">
 <h2>Restrict on concept class</h2>
 <p>We can also restrict on concept class, in this case only identifying
 codes with a concept class of “Quant Clinical Drug”</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>acetaminophen3 <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm_arrow,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">keywords =</span> <span class="st">&quot;acetaminophen&quot;</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">domains =</span> <span class="st">&quot;drug&quot;</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">conceptClassId =</span> <span class="fu">c</span>(<span class="st">&quot;Quant Clinical Drug&quot;</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">doseForm =</span> <span class="fu">c</span>(<span class="st">&quot;injection&quot;</span>, <span class="st">&quot;intravenous&quot;</span>),</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardConcept =</span> <span class="st">&quot;standard&quot;</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>acetaminophen3 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 5</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 15</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_id                  &lt;int&gt; 740261, 19112656, 36279869, 36778619, 3677…</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_name                &lt;chr&gt; &quot;50 ML acetaminophen 10 MG/ML Injection&quot;, …</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ domain_id                   &lt;chr&gt; &quot;drug&quot;, &quot;drug&quot;, &quot;drug&quot;, &quot;drug&quot;, &quot;drug&quot;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_class_id            &lt;chr&gt; &quot;quant clinical drug&quot;, &quot;quant clinical dru…</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ vocabulary_id               &lt;chr&gt; &quot;rxnorm&quot;, &quot;rxnorm&quot;, &quot;rxnorm extension&quot;, &quot;r…</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ found_from                  &lt;chr&gt; &quot;From initial search&quot;, &quot;From initial searc…</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ ingredient_concept_id       &lt;int&gt; 1125315, 1125315, 1125315, 1125315, 1125315</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ amount_value                &lt;dbl&gt; NA, NA, NA, NA, NA</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ amount_unit_concept_id      &lt;int&gt; NA, NA, NA, NA, NA</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ numerator_value             &lt;dbl&gt; 500, 1000, 100, 1000, 500</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ numerator_unit_concept_id   &lt;int&gt; 8576, 8576, 8576, 8576, 8576</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ denominator_value           &lt;dbl&gt; 50, 100, 10, 100, 50</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ denominator_unit_concept_id &lt;int&gt; 8587, 8587, 8587, 8587, 8587</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ box_size                    &lt;int&gt; NA, NA, NA, NA, NA</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ dose_form                   &lt;chr&gt; &quot;Injection&quot;, &quot;Injection&quot;, &quot;Intravenous Sol…</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>acetaminophen3 <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">keywords =</span> <span class="st">&quot;acetaminophen&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">domains =</span> <span class="st">&quot;drug&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">conceptClassId =</span> <span class="fu">c</span>(<span class="st">&quot;Quant Clinical Drug&quot;</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">doseForm =</span> <span class="fu">c</span>(<span class="st">&quot;injection&quot;</span>, <span class="st">&quot;intravenous&quot;</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardConcept =</span> <span class="st">&quot;standard&quot;</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>acetaminophen3 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 5</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 15</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_id                  &lt;int&gt; 740261, 19112656, 36279869, 36778619, 3677…</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_name                &lt;chr&gt; &quot;50 ML acetaminophen 10 MG/ML Injection&quot;, …</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ domain_id                   &lt;chr&gt; &quot;drug&quot;, &quot;drug&quot;, &quot;drug&quot;, &quot;drug&quot;, &quot;drug&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ concept_class_id            &lt;chr&gt; &quot;quant clinical drug&quot;, &quot;quant clinical dru…</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ vocabulary_id               &lt;chr&gt; &quot;rxnorm&quot;, &quot;rxnorm&quot;, &quot;rxnorm extension&quot;, &quot;r…</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ found_from                  &lt;chr&gt; &quot;From initial search&quot;, &quot;From initial searc…</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ ingredient_concept_id       &lt;int&gt; 1125315, 1125315, 1125315, 1125315, 1125315</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ amount_value                &lt;dbl&gt; NA, NA, NA, NA, NA</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ amount_unit_concept_id      &lt;int&gt; NA, NA, NA, NA, NA</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ numerator_value             &lt;dbl&gt; 500, 1000, 100, 1000, 500</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ numerator_unit_concept_id   &lt;int&gt; 8576, 8576, 8576, 8576, 8576</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ denominator_value           &lt;dbl&gt; 50, 100, 10, 100, 50</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ denominator_unit_concept_id &lt;int&gt; 8587, 8587, 8587, 8587, 8587</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ box_size                    &lt;int&gt; NA, NA, NA, NA, NA</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ dose_form                   &lt;chr&gt; &quot;Injection&quot;, &quot;Injection&quot;, &quot;Intravenous Sol…</span></span></code></pre></div>
+<p>We can see all the concept classes for drugs like so</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getConceptClassId</span>(<span class="at">cdm =</span> cdm, <span class="at">domain =</span> <span class="st">&quot;drug&quot;</span>)</span></code></pre></div>
+<pre><code>#&gt;  [1] &quot;Ingredient&quot;          &quot;Clinical Drug Comp&quot;  &quot;Clinical Drug&quot;      
+#&gt;  [4] &quot;Quant Branded Drug&quot;  &quot;Quant Clinical Drug&quot; &quot;Branded Drug&quot;       
+#&gt;  [7] &quot;Marketed Product&quot;    &quot;Branded Drug Box&quot;    &quot;Branded Drug Comp&quot;  
+#&gt; [10] &quot;Quant Clinical Box&quot;  &quot;Clinical Drug Box&quot;   &quot;Clinical Drug Form&quot; 
+#&gt; [13] &quot;Quant Branded Box&quot;   &quot;Branded Drug Form&quot;   &quot;Branded Pack&quot;       
+#&gt; [16] &quot;Clinical Pack&quot;       &quot;Branded Pack Box&quot;    &quot;Clinical Pack Box&quot;  
+#&gt; [19] &quot;HCPCS&quot;</code></pre>
 </div>
 
 

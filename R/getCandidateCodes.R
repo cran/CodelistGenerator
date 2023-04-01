@@ -39,6 +39,8 @@
 #' @param standardConcept  Character vector with one or more of "Standard",
 #' "Classification", and "Non-standard". These correspond to the flags used
 #' for the standard_concept field in the concept table of the cdm.
+#' @param exactMatch Either TRUE or FALSE. If TRUE only exact matches of
+#' keywords will be identified when running the initial search.
 #' @param searchInSynonyms Either TRUE or FALSE. If TRUE the code will also
 #' search using both the primary name in the concept table and synonyms from
 #' the concept synonym table.
@@ -46,6 +48,9 @@
 #' search via the concept synonym table.
 #' @param searchNonStandard Either TRUE or FALSE. If TRUE the code will also
 #' search via non-standard concepts.
+#' @param includeSequela Either TRUE or FALSE. If TRUE, codes associated via
+#' a concept relationship of 'Due to of' or 'Occurs before' will also be
+#' identified.
 #' @param includeDescendants Either TRUE or FALSE.
 #' If TRUE descendant concepts of identified concepts
 #' will be included in the candidate codelist.
@@ -80,9 +85,11 @@ getCandidateCodes <- function(cdm = NULL,
                               doseForm = NULL,
                               vocabularyId = NULL,
                               standardConcept = "Standard",
+                              exactMatch = FALSE,
                               searchInSynonyms = FALSE,
                               searchViaSynonyms = FALSE,
                               searchNonStandard = FALSE,
+                              includeSequela = FALSE,
                               includeDescendants = TRUE,
                               includeAncestor = FALSE,
                               fuzzyMatch = FALSE,
@@ -98,6 +105,7 @@ getCandidateCodes <- function(cdm = NULL,
     message(glue::glue("-- domains: {toString(domains)}"))
     message(glue::glue("-- conceptClassId: {toString(conceptClassId)}"))
     message(glue::glue("-- vocabularyId: {toString(vocabularyId)}"))
+    message(glue::glue("-- exactMatch: {toString(exactMatch)}"))
     message(glue::glue("-- standardConcept: {toString(standardConcept)}"))
     message(glue::glue("-- searchInSynonyms: {toString(searchInSynonyms)}"))
     message(glue::glue("-- searchViaSynonyms: {toString(searchViaSynonyms)}"))
@@ -140,10 +148,11 @@ getCandidateCodes <- function(cdm = NULL,
     ))
   if (!isTRUE(standardConceptCheck)) {
     errorMessage$push(
-      "- standardConcept should be one or more of Standard, Non-stanadard, or Classification"
+      "- standardConcept must be from Standard, Non-stanadard, or Classification"
     )
   }
   checkmate::assertTRUE(standardConceptCheck, add = errorMessage)
+  checkmate::assert_logical(exactMatch, add = errorMessage)
   checkmate::assert_logical(searchInSynonyms, add = errorMessage)
   checkmate::assert_logical(searchViaSynonyms, add = errorMessage)
   checkmate::assert_logical(searchNonStandard, add = errorMessage)
@@ -162,6 +171,16 @@ getCandidateCodes <- function(cdm = NULL,
   checkTableExists(cdm, "vocabulary", errorMessage)
   checkmate::reportAssertions(collection = errorMessage)
 
+  errorMessage <- checkmate::makeAssertCollection()
+  if(exactMatch == TRUE) {
+    checkmate::assert_false(fuzzyMatch, add = errorMessage)
+  if (!isFALSE(fuzzyMatch)) {
+    errorMessage$push(
+      "- fuzzyMatch must be FALSE if exactMatch is TRUE"
+    )
+  }
+}
+  checkmate::reportAssertions(collection = errorMessage)
 
   if (verbose == TRUE) {
     message("Starting search")
@@ -186,9 +205,11 @@ getCandidateCodes <- function(cdm = NULL,
       doseForm = doseForm,
       vocabularyId = vocabularyId,
       standardConcept = standardConcept,
+      exactMatch = exactMatch,
       searchInSynonyms = searchInSynonyms,
       searchViaSynonyms = searchViaSynonyms,
       searchNonStandard = searchNonStandard,
+      includeSequela = includeSequela,
       fuzzyMatch = fuzzyMatch,
       maxDistanceCost = maxDistanceCost,
       includeDescendants = includeDescendants,

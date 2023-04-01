@@ -58,8 +58,20 @@ acetaminophen1 <- readRDS(here("vignettes", "medData01.RData"))
 acetaminophen1 %>% dplyr::glimpse()
 
 ## ---- eval=FALSE--------------------------------------------------------------
-#  acetaminophen2 <- getCandidateCodes(
-#    cdm = cdm_arrow,
+#  acetaminophen2a <- getCandidateCodes(
+#    cdm = cdm,
+#    keywords = c(
+#      "acetaminophen injection",
+#      "acetaminophen intravenous"
+#    ),
+#    domains = "drug",
+#    standardConcept = "standard",
+#    includeDescendants = TRUE,
+#    verbose = TRUE
+#  )
+#  
+#  acetaminophen2b <- getCandidateCodes(
+#    cdm = cdm,
 #    keywords = "acetaminophen",
 #    domains = "drug",
 #    doseForm = c("injection", "intravenous"),
@@ -69,14 +81,27 @@ acetaminophen1 %>% dplyr::glimpse()
 #  )
 
 ## ----  message=FALSE, warning=FALSE, echo=FALSE-------------------------------
-acetaminophen2 <- readRDS(here("vignettes", "medData02.RData"))
+acetaminophen2a <- readRDS(here("vignettes", "medData02a.RData"))
+acetaminophen2b <- readRDS(here("vignettes", "medData02b.RData"))
 
 ## ----  message=FALSE, warning=FALSE-------------------------------------------
-acetaminophen2 %>% dplyr::glimpse()
+acetaminophen2a %>% dplyr::glimpse()
+acetaminophen2b %>% dplyr::glimpse()
+
+## ----  message=FALSE, warning=FALSE-------------------------------------------
+compareCodelists(acetaminophen2a, acetaminophen2b) %>% 
+  group_by(codelist) %>% 
+  tally()
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  getDoseForm(cdm = cdm)
+
+## ----  message=FALSE, warning=FALSE, echo=FALSE-------------------------------
+readRDS(here("vignettes", "medDataDoseForms.RData"))
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  acetaminophen3 <- getCandidateCodes(
-#    cdm = cdm_arrow,
+#    cdm = cdm,
 #    keywords = "acetaminophen",
 #    domains = "drug",
 #    conceptClassId = c("Quant Clinical Drug"),
@@ -91,4 +116,10 @@ acetaminophen3 <- readRDS(here("vignettes", "medData03.RData"))
 
 ## ----  message=FALSE, warning=FALSE-------------------------------------------
 acetaminophen3 %>% dplyr::glimpse()
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  getConceptClassId(cdm = cdm, domain = "drug")
+
+## ----  message=FALSE, warning=FALSE, echo=FALSE-------------------------------
+readRDS(here("vignettes", "medDataConceptClass.RData"))
 

@@ -13,9 +13,11 @@ getCandidateCodes(
   doseForm = NULL,
   vocabularyId = NULL,
   standardConcept = "Standard",
+  exactMatch = FALSE,
   searchInSynonyms = FALSE,
   searchViaSynonyms = FALSE,
   searchNonStandard = FALSE,
+  includeSequela = FALSE,
   includeDescendants = TRUE,
   includeAncestor = FALSE,
   fuzzyMatch = FALSE,
@@ -48,6 +50,9 @@ of the Concept}
 "Classification", and "Non-standard". These correspond to the flags used
 for the standard_concept field in the concept table of the cdm.}
 
+\item{exactMatch}{Either TRUE or FALSE. If TRUE only exact matches of
+keywords will be identified when running the initial search.}
+
 \item{searchInSynonyms}{Either TRUE or FALSE. If TRUE the code will also
 search using both the primary name in the concept table and synonyms from
 the concept synonym table.}
@@ -57,6 +62,10 @@ search via the concept synonym table.}
 
 \item{searchNonStandard}{Either TRUE or FALSE. If TRUE the code will also
 search via non-standard concepts.}
+
+\item{includeSequela}{Either TRUE or FALSE. If TRUE, codes associated via
+a concept relationship of 'Due to of' or 'Occurs before' will also be
+identified.}
 
 \item{includeDescendants}{Either TRUE or FALSE.
 If TRUE descendant concepts of identified concepts

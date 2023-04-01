@@ -22,9 +22,11 @@ runSearch <- function(keywords,
                       doseForm,
                       vocabularyId,
                       standardConcept,
+                      exactMatch,
                       searchInSynonyms,
                       searchViaSynonyms,
                       searchNonStandard,
+                      includeSequela,
                       fuzzyMatch,
                       maxDistanceCost,
                       includeDescendants,
@@ -37,7 +39,6 @@ runSearch <- function(keywords,
   conceptSynonymDb <- cdm$concept_synonym
   conceptRelationshipDb <- cdm$concept_relationship
   drugStrengthDb <- cdm$drug_strength
-
 
   # formatting of conceptDb variables
   conceptDb <- conceptDb %>%
@@ -181,7 +182,7 @@ runSearch <- function(keywords,
     }
     # Get standard, condition concepts which include one of the exclusion words
     # always use exact matching
-    excludeCodes <- getExactMatches(
+    excludeCodes <- getMatches(
       words = tidyWords(exclude),
       conceptDf = workingConcept
     )
@@ -196,9 +197,9 @@ runSearch <- function(keywords,
     message(glue::glue("{domains}: Getting concepts to include"))
   }
 
-  # 2a) on exact match
-  if (fuzzyMatch == FALSE) {
-    candidateCodes <- getExactMatches(
+  # 2a) match
+  if (fuzzyMatch == FALSE && exactMatch == FALSE) {
+    candidateCodes <- getMatches(
       words = tidyWords(keywords),
       conceptDf = workingConcept
     )
@@ -210,9 +211,16 @@ runSearch <- function(keywords,
       words = tidyWords(keywords),
       conceptDf = workingConcept,
       mdCost = maxDistanceCost
-    )
+    ) %>%
+      dplyr::distinct()
+  }
 
-    candidateCodes <- candidateCodes %>%
+  # 2c) exact match
+  if (exactMatch == TRUE) {
+    candidateCodes <- getExactMatches(
+      words = tidyWords(keywords),
+      conceptDf = workingConcept
+    ) %>%
       dplyr::distinct()
   }
 
@@ -235,7 +243,7 @@ runSearch <- function(keywords,
   # left join back to concept from workingConcept table
   if (searchInSynonyms == TRUE) {
     if (fuzzyMatch == FALSE) {
-      candidateCodesInSynonyms <- getExactMatches(
+      candidateCodesInSynonyms <- getMatches(
         words = tidyWords(keywords),
         conceptDf = workingconceptSynonym %>%
           dplyr::rename("concept_name" = "concept_synonym_name")
@@ -286,7 +294,7 @@ runSearch <- function(keywords,
     # 4) look for any standard, condition concepts with a synonym of the
     # codes found from the keywords
     if (searchViaSynonyms == TRUE && verbose == TRUE) {
-      message(glue::glue("{domains}: Getting concepts to include from exact matches of synonyms"))
+      message(glue::glue("{domains}: Getting from exact matches of synonyms"))
     }
 
     if (searchViaSynonyms == TRUE) {
@@ -309,7 +317,7 @@ runSearch <- function(keywords,
       synonyms <- synonyms[stringr::str_count(synonyms) > 1]
 
       if (fuzzyMatch == FALSE) {
-        synonymCodes <- getExactMatches(
+        synonymCodes <- getMatches(
           words = synonyms,
           conceptDf = workingConcept
         )
@@ -429,7 +437,7 @@ runSearch <- function(keywords,
       dplyr::rename_with(tolower)
 
     if (fuzzyMatch == FALSE && nrow(conceptNs) > 0) {
-      candidateCodesNs <- getExactMatches(
+      candidateCodesNs <- getMatches(
         words = tidyWords(keywords),
         conceptDf = conceptNs
       )
@@ -478,6 +486,70 @@ runSearch <- function(keywords,
           )
       }
     }
+  }
+
+  # 8) add codes from sequelae
+
+  if (includeSequela == TRUE) {
+    if (verbose == TRUE) {
+      message(glue::glue("{domains}: Getting concepts from sequelae"))
+    }
+
+    sequelaCodesFrom <- candidateCodes %>%
+      dplyr::filter(!is.na(.data$concept_id)) %>%
+      dplyr::inner_join(
+        conceptRelationshipDb %>%
+          dplyr::filter(.data$relationship_id %in%
+            c("Due to of", "Occurs before")) %>%
+          dplyr::rename(
+            "concept_id" = "concept_id_1",
+            "sequelae_id" = "concept_id_2"
+          ) %>%
+          dplyr::collect(),
+        by = "concept_id"
+      )
+
+    sequelaCodesTo <- candidateCodes %>%
+      dplyr::filter(!is.na(.data$concept_id)) %>%
+      dplyr::inner_join(
+        conceptRelationshipDb %>%
+          dplyr::filter(.data$relationship_id %in%
+                          c("Due to of", "Occurs before")) %>%
+          dplyr::rename(
+            "concept_id" = "concept_id_2",
+            "sequelae_id" = "concept_id_1"
+          ) %>%
+          dplyr::collect(),
+        by = "concept_id"
+      )
+
+    sequelaCodes <- dplyr::bind_rows(sequelaCodesFrom, sequelaCodesTo)
+
+    sequelaCodes <- concept %>%
+      dplyr::inner_join(
+        sequelaCodes %>%
+          dplyr::select("sequelae_id") %>%
+          dplyr::rename("concept_id" = "sequelae_id"),
+        by = "concept_id"
+      )
+
+    candidateCodes <- dplyr::bind_rows(
+      candidateCodes,
+      sequelaCodes %>%
+        dplyr::mutate(found_from = "From sequelae")
+    ) %>%
+      dplyr::distinct()
+
+    # run exclusion
+    if (length(exclude) > 0) {
+      if (nrow(excludeCodes) > 0) {
+        candidateCodes <- candidateCodes %>%
+          dplyr::anti_join(excludeCodes %>% dplyr::select("concept_id"),
+                           by = "concept_id"
+          )
+      }
+    }
+
   }
 
   if (nrow(candidateCodes) == 0) {
@@ -614,8 +686,8 @@ tidyWords <- function(words) {
   return(workingWords)
 }
 
-getExactMatches <- function(words,
-                            conceptDf) {
+getMatches <- function(words,
+                       conceptDf) {
   conceptDf <- conceptDf %>% # start with all
     dplyr::mutate(concept_name = tidyWords(.data$concept_name))
 
@@ -634,15 +706,27 @@ getExactMatches <- function(words,
     workingConcepts <- conceptDf # start with all
 
     for (j in seq_along(workingExclude)) {
-      workingConcepts <- workingConcepts %>%
-        dplyr::filter(stringr::str_detect(
-          .data$concept_name,
-          .env$workingExclude[j]
-        ))
+      if (nchar(workingExclude[j]) >= 1) {
+        workingConcepts <- workingConcepts %>%
+          dplyr::filter(stringr::str_detect(
+            .data$concept_name,
+            .env$workingExclude[j]
+          ))
+      }
     }
     conceptsFound[[i]] <- workingConcepts
   }
   conceptsFound <- dplyr::bind_rows(conceptsFound) %>% dplyr::distinct()
+
+  return(conceptsFound)
+}
+
+getExactMatches <- function(words,
+                       conceptDf) {
+
+  conceptsFound <- conceptDf %>%
+    dplyr::mutate(concept_name = tidyWords(.data$concept_name)) %>%
+    dplyr::filter(.data$concept_name %in% .env$words)
 
   return(conceptsFound)
 }
