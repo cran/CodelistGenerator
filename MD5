@@ -1,13 +1,14 @@
-3ffdf6457bea00357eacb7d281b67f2c *DESCRIPTION
-b221fa6331e9cda585ff14ad03211d81 *NAMESPACE
-5c301f361fddfddb314fac2ac7256377 *NEWS.md
+b66ed4577bb2f28976609d6fb8114076 *DESCRIPTION
+dc0eba6053ed44b35873f2f47273290b *NAMESPACE
+1961742cf739ec2ca3d982580784c6f0 *NEWS.md
 e9536d8dc707669f2de1af958065a0f2 *R/CodelistGenerator-package.R
 3f1431d60f5ac4e245320f2676df896f *R/compareCodelists.R
 f49c90c4fdd5b4c8300c92372f8fff21 *R/drugCodes.R
 a6d514ab1d71144b8ae3d592428f820c *R/getCandidateCodes.R
+d48688542a6c71b4eb228d55fd44f5fc *R/getICD10StandardCodes.R
 77d1c43adcaf219a91d76cca31ccc97f *R/getMappings.R
 1b62166eada0b90453dc89747f4ceae9 *R/inputValidation.R
-82a20da06baec5c492d1ec1dd7b029b6 *R/mockVocabRef.R
+328f28274752ca18e7685492d40a00e3 *R/mockVocabRef.R
 0c4c0cd9a605b35b2f1194c308279750 *R/runSearch.R
 cf794928715019cf81bd51d467156178 *R/utils-pipe.R
 7f7b194fe26c9428c56b19e2b7de7ff6 *R/vocabUtilities.R
@@ -16,10 +17,10 @@ a340440af00511c37140bb968a98189b *build/vignette.rds
 42b65802d597896b28b57a304820609c *inst/WORDLIST
 c0c1c9248ccc7333f5e531bfa591be4a *inst/doc/a01_Introduction_to_CodelistGenerator.R
 04aee37a0cc8cea8fdac23ed5684fe02 *inst/doc/a01_Introduction_to_CodelistGenerator.Rmd
-56b4ad1f1fb1e6885b57ad54435e3894 *inst/doc/a01_Introduction_to_CodelistGenerator.html
+08bc8c7567f57cff235905c2416a723d *inst/doc/a01_Introduction_to_CodelistGenerator.html
 dc81a2c53ccdabf3ebd68d5f6e9775ea *inst/doc/a02_Candidate_codes_OA.R
 9588c681c065b0f97e504d0ea4103d58 *inst/doc/a02_Candidate_codes_OA.Rmd
-fb9a6f7de3652c6de2e87990f32b66dc *inst/doc/a02_Candidate_codes_OA.html
+5a7951bae26c5b157905a75bc0542e98 *inst/doc/a02_Candidate_codes_OA.html
 2eaa7597e4c1b7f17d387a3d8bab3e06 *inst/doc/a03_Options_for_CodelistGenerator.R
 f3d1a6b4db6af9db6cef4bc7e51a97c3 *inst/doc/a03_Options_for_CodelistGenerator.Rmd
 3a807449b1a9435f5944ab05e8f5ad72 *inst/doc/a03_Options_for_CodelistGenerator.html
@@ -36,6 +37,7 @@ fb3ed1ce8b438977cdd22875b1f977b1 *man/getATCCodes.Rd
 966c39ab326c90e7c2db61eabfd6dec4 *man/getDomains.Rd
 763614a2b8e028cd5377b88399d93cb2 *man/getDoseForm.Rd
 87db711003ab84b62d7b0328e019c3d9 *man/getDrugIngredientCodes.Rd
+037328e73ad7b79d2a4085bd83f87fe8 *man/getICD10StandardCodes.Rd
 d1d40bf10a268adef63a18c416768d53 *man/getMappings.Rd
 c849ffc479772789d8e50c806e35e840 *man/getVocabVersion.Rd
 cffee2ee6afc20367dd1ab94c4830a62 *man/getVocabularies.Rd
@@ -45,6 +47,7 @@ b56f1a7df9cd34044abbdd356febe03a *man/mockVocabRef.Rd
 f11713b7188198ec3a2e7d62a74e413f *tests/testthat/test-compareCodelists.R
 16a1037a3631fb552b3e07fdec9617c9 *tests/testthat/test-drugCodes.R
 d6be650a06df3e4b2c135ed9aa8d87bc *tests/testthat/test-getCandidateCodes.R
+d1b7adb24cd15de9350f1b8e827dceca *tests/testthat/test-getICD10StandardCodes.R
 c7db259ff1bde32fc568fabf0c88308a *tests/testthat/test-getMappings.R
 7e440ea7a899d9a3a22d375cafa66e4a *tests/testthat/test-mockVocabRef.R
 274e06660e67a28638ccd0b6b18b6e82 *tests/testthat/test-synthea_sql_server.R

@@ -1,6 +1,6 @@
 Package: CodelistGenerator
 Title: Generate Code Lists for the OMOP Common Data Model
-Version: 1.2.0
+Version: 1.3.0
 Authors@R: 
     person("Edward", "Burn", , "edward.burn@ndorms.ox.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9286-1128"))
@@ -20,8 +20,8 @@ VignetteBuilder: knitr
 URL: https://darwin-eu.github.io/CodelistGenerator/
 Language: en-US
 NeedsCompilation: no
-Packaged: 2023-05-04 06:56:47 UTC; eburn
+Packaged: 2023-05-30 22:22:53 UTC; eburn
 Author: Edward Burn [aut, cre] (<https://orcid.org/0000-0002-9286-1128>)
 Maintainer: Edward Burn <edward.burn@ndorms.ox.ac.uk>
 Repository: CRAN
-Date/Publication: 2023-05-04 08:25:39 UTC
+Date/Publication: 2023-05-30 22:40:02 UTC
