@@ -25,44 +25,15 @@ library(CDMConnector)
 #    user = Sys.getenv("user"),
 #    password = Sys.getenv("password")
 #  )
-#  # name of vocabulary schema
-#  vocabularyDatabaseSchema <- Sys.getenv("vocabulary_schema")
 #  
 #  # create cdm reference
 #  cdm <- CDMConnector::cdm_from_con(
 #    con = db,
-#    cdm_schema = vocabularyDatabaseSchema,
-#    cdm_tables = tidyselect::all_of(c(
-#      "concept",
-#      "concept_relationship",
-#      "concept_ancestor",
-#      "concept_synonym",
-#      "vocabulary"
-#    ))
+#    cdm_schema = Sys.getenv("vocabulary_schema")
 #  )
-#  # vocab to arrow
-#  # save in temp folder for this example
-#  dOut <- here(tempdir(), "db_vocab")
-#  dir.create(dOut)
-#  CDMConnector::stow(cdm, dOut)
-#  
-#  # new cdm reference using arrow
-#  cdmArrow <- CDMConnector::cdm_from_files(
-#    path = dOut,
-#    cdm_tables = tidyselect::all_of(c(
-#      "concept",
-#      "concept_relationship",
-#      "concept_ancestor",
-#      "concept_synonym",
-#      "vocabulary"
-#    )),
-#    as_data_frame = FALSE
-#  )
-#  
-#  rm(cdm)
 
 ## ---- eval=FALSE--------------------------------------------------------------
-#  getVocabVersion(cdm = cdmArrow)
+#  getVocabVersion(cdm = cdm)
 
 ## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------
 vocabVersion <- readRDS(here("vignettes", "introVocab.RData"))

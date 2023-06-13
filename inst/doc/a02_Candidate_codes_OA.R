@@ -43,15 +43,7 @@ library(CDMConnector)
 #  # create cdm reference
 #  cdm <- CDMConnector::cdm_from_con(
 #    con = db,
-#    cdm_schema = vocabularyDatabaseSchema,
-#    cdm_tables = tidyselect::all_of(c(
-#      "concept",
-#      "concept_relationship",
-#      "concept_ancestor",
-#      "concept_synonym",
-#      "drug_strength",
-#      "vocabulary"
-#    ))
+#    cdm_schema = vocabularyDatabaseSchema
 #  )
 
 ## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------

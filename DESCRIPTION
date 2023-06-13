@@ -1,6 +1,6 @@
 Package: CodelistGenerator
 Title: Generate Code Lists for the OMOP Common Data Model
-Version: 1.4.0
+Version: 1.5.0
 Authors@R: 
     person("Edward", "Burn", , "edward.burn@ndorms.ox.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9286-1128"))
@@ -8,7 +8,7 @@ Description: Generate a candidate code list for the Observational Medical Outcom
 License: Apache License (>= 2)
 Encoding: UTF-8
 RoxygenNote: 7.2.3
-Imports: CDMConnector (>= 0.5.1), checkmate (>= 2.0.0), DBI (>= 1.1.0),
+Imports: CDMConnector (>= 1.0.0), checkmate (>= 2.0.0), DBI (>= 1.1.0),
         dplyr (>= 1.0.0), magrittr (>= 2.0.0), rlang (>= 1.0.0), glue
         (>= 1.5.0), stringr (>= 1.4.0), tidyselect (>= 1.2.0), tidyr
         (>= 1.2.0), cli (>= 3.1.0), purrr, lubridate, PatientProfiles
@@ -21,8 +21,8 @@ VignetteBuilder: knitr
 URL: https://darwin-eu.github.io/CodelistGenerator/
 Language: en-US
 NeedsCompilation: no
-Packaged: 2023-06-06 06:58:02 UTC; eburn
+Packaged: 2023-06-12 15:46:57 UTC; eburn
 Author: Edward Burn [aut, cre] (<https://orcid.org/0000-0002-9286-1128>)
 Maintainer: Edward Burn <edward.burn@ndorms.ox.ac.uk>
 Repository: CRAN
-Date/Publication: 2023-06-06 07:20:02 UTC
+Date/Publication: 2023-06-13 07:00:15 UTC
