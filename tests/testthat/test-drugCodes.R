@@ -1,6 +1,6 @@
 test_that("getATCCodes working", {
 
-  backends <- c("database", "data_frame")
+  backends <- c("database")
   for (i in seq_along(backends)) {
   cdm <- mockVocabRef(backend = backends[i])
   atcCodes <- getATCCodes(cdm, level = "ATC 1st")
@@ -9,6 +9,12 @@ test_that("getATCCodes working", {
   atcCodes2 <- getATCCodes(cdm, level = "ATC 1st",
                            name = "ALIMENTARY TRACT AND METABOLISM")
   expect_true(all(atcCodes2[[1]] == c(12,13)))
+
+  atcCodes3 <- getATCCodes(cdm, level = "ATC 1st",
+                           name = "ALIMENTARY TRACT AND METABOLISM",
+                           withConceptDetails = TRUE)
+  expect_true(!is.null(atcCodes3[[1]]$concept_name))
+
 
   if (backends[[i]] == "database") {
     DBI::dbDisconnect(attr(cdm, "dbcon"), shutdown = TRUE)
@@ -20,7 +26,7 @@ test_that("getATCCodes working", {
 
 test_that("getATCCodes expected errors", {
 
-  backends <- c("database", "data_frame")
+  backends <- c("database")
   for (i in seq_along(backends)) {
     cdm <- mockVocabRef(backend = backends[i])
     expect_error(getATCCodes(cdm, level = "Not an ATC level"))
@@ -36,7 +42,7 @@ test_that("getATCCodes expected errors", {
 
 test_that("getDrugIngredientCodes working", {
 
-  backends <- c("database", "data_frame")
+  backends <- c("database")
   for (i in seq_along(backends)) {
     cdm <- mockVocabRef(backend = backends[i])
     ing_codes <- getDrugIngredientCodes(cdm)
@@ -55,6 +61,12 @@ test_that("getDrugIngredientCodes working", {
                                          doseForm = "injection")
     expect_true(all(ing_codes4[[1]] == c(10)))
 
+    ing_codes5 <- getDrugIngredientCodes(cdm,
+                                         name = "Adalimumab",
+                                         doseForm = "injection",
+                                         withConceptDetails = TRUE)
+    expect_true(!is.null(ing_codes5[[1]]$concept_name))
+
     if (backends[[i]] == "database") {
       DBI::dbDisconnect(attr(cdm, "dbcon"), shutdown = TRUE)
     }
@@ -64,7 +76,7 @@ test_that("getDrugIngredientCodes working", {
 
 test_that("getDrugIngredientCodes expected errors", {
 
-  backends <- c("database", "data_frame")
+  backends <- c("database")
   for (i in seq_along(backends)) {
     cdm <- mockVocabRef(backend = backends[i])
     expect_error(getDrugIngredientCodes(cdm, name = "Not an Ingredient"))

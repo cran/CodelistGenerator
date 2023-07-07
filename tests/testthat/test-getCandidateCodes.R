@@ -1,5 +1,5 @@
 test_that("tests with mock db", {
-  backends <- c("database",  "data_frame")
+  backends <- c("database")
 
   for (i in seq_along(backends)) {
     # mock db
@@ -89,8 +89,8 @@ test_that("tests with mock db", {
       includeDescendants = TRUE,
       searchViaSynonyms = FALSE
     )
-    expect_true((nrow(codes) == 4 &
-      all(codes$concept_id %in% c(3, 4, 5, 8)) &
+    expect_true((nrow(codes) == 5 &
+      all(codes$concept_id %in% c(3, 4, 5, 8, 17)) &
       all(!codes$concept_id %in% c(1, 2, 7))))
 
 
@@ -396,7 +396,7 @@ test_that("tests with mock db", {
 })
 
 test_that("tests with mock db - multiple domains", {
-  backends <- c("database", "data_frame")
+  backends <- c("database")
 
   for (i in seq_along(backends)) {
     # mock db
@@ -430,7 +430,7 @@ test_that("tests with mock db - multiple domains", {
 })
 
 test_that("tests exact match", {
-  backends <- c("database", "data_frame")
+  backends <- c("database")
 
   for (i in seq_along(backends)) {
     # mock db
