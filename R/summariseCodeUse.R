@@ -66,7 +66,7 @@ summariseCodeUse <- function(x,
                                        age = !is.null(ageGroup),
                                        ageGroup = ageGroup,
                                        sex = bySex,
-                                       priorHistory = FALSE,
+                                       priorObservation = FALSE,
                                        futureObservation =  FALSE,
                                        indexDate = "date")
   }
@@ -86,12 +86,6 @@ summariseCodeUse <- function(x,
     dplyr::mutate(estimate = dplyr::if_else(
       .data$estimate_suppressed == "TRUE",
       NA, .data$estimate))
-
-  if(!"record" %in% countBy){
-    codeCounts <- codeCounts %>%
-      dplyr::mutate(concept_name= NA,
-                    concept_id =NA)
-  }
 
   codeCounts <- codeCounts %>%
     dplyr::mutate(group_level = dplyr::if_else(.data$group_name == "By concept",
