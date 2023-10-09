@@ -1,10 +1,10 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
 library(here)
 library(readr)
 library(DBI)
@@ -16,7 +16,7 @@ library(kableExtra)
 library(CodelistGenerator)
 library(CDMConnector)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  # example with postgres database connection details
 #  db <- DBI::dbConnect(RPostgres::Postgres(),
 #    dbname = Sys.getenv("server"),
@@ -32,14 +32,14 @@ library(CDMConnector)
 #    cdm_schema = Sys.getenv("vocabulary_schema")
 #  )
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  getVocabVersion(cdm = cdm)
 
-## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
 vocabVersion <- readRDS(here("vignettes", "introVocab.RData"))
 vocabVersion
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  codesFromDescendants <- tbl(
 #    db,
 #    sql(paste0(
@@ -62,10 +62,10 @@ vocabVersion
 #    ) %>%
 #    collect()
 
-## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
 codesFromDescendants <- readRDS(here("vignettes", "introData01.RData"))
 
-## ----  message=FALSE, warning=FALSE-------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 datatable(codesFromDescendants,
   rownames = FALSE,
   options = list(
@@ -74,7 +74,7 @@ datatable(codesFromDescendants,
   )
 )
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  dementiaCodes1 <- getCandidateCodes(
 #    cdm = cdm,
 #    keywords = "dementia",
@@ -82,10 +82,10 @@ datatable(codesFromDescendants,
 #    includeDescendants = TRUE
 #  )
 
-## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
 dementiaCodes1 <- readRDS(here("vignettes", "introData02.RData"))
 
-## ----  message=FALSE, warning=FALSE-------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 datatable(dementiaCodes1,
   rownames = FALSE,
   options = list(
@@ -94,21 +94,21 @@ datatable(dementiaCodes1,
   )
 )
 
-## ----  eval=FALSE-------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  codeComparison <- compareCodelists(
 #    codesFromDescendants,
 #    dementiaCodes1
 #  )
 
-## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
 codeComparison <- readRDS(here("vignettes", "introData03.RData"))
 
-## ----  message=FALSE, warning=FALSE-------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 kable(codeComparison %>%
   group_by(codelist) %>%
   tally())
 
-## ----  message=FALSE, warning=FALSE-------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 datatable(
   codeComparison %>%
     filter(codelist == "Only codelist 2"),
@@ -119,17 +119,17 @@ datatable(
   )
 )
 
-## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
 icdMappings <- readRDS(here("vignettes", "introData04.RData"))
 
-## ----  eval=FALSE-------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  icdMappings <- getMappings(
 #    cdm = cdm,
 #    candidateCodelist = dementiaCodes1,
 #    nonStandardVocabularies = "ICD10CM"
 #  )
 
-## ----  message=FALSE, warning=FALSE-------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 datatable(icdMappings,
   rownames = FALSE,
   options = list(
@@ -138,17 +138,17 @@ datatable(icdMappings,
   )
 )
 
-## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
 readMappings <- readRDS(here("vignettes", "introData05.RData"))
 
-## ----  eval=FALSE-------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  readMappings <- getMappings(
 #    cdm = cdm,
 #    candidateCodelist = dementiaCodes1,
 #    nonStandardVocabularies = "Read"
 #  )
 
-## ----  message=FALSE, warning=FALSE-------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 datatable(readMappings,
   rownames = FALSE,
   options = list(

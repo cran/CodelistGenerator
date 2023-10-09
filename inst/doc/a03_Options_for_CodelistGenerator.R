@@ -1,10 +1,10 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----  message=FALSE, warning=FALSE,echo=FALSE--------------------------------
+## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
 library(DBI)
 library(dplyr)
 library(dbplyr)
@@ -16,7 +16,7 @@ library(CDMConnector)
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig1.png")
 
-## ----  message=FALSE, warning=FALSE,echo=FALSE, results='hide'----------------
+## ----message=FALSE, warning=FALSE,echo=FALSE, results='hide'------------------
 cdm <- mockVocabRef()
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -67,7 +67,7 @@ codes <- getCandidateCodes(
 
 kable(codes)
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig5.png")
 
 ## -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ codes <- getCandidateCodes(
 
 kable(codes)
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig4.png")
 
 ## -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ codes <- getCandidateCodes(
 
 kable(codes)
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig5.png")
 
 ## -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ codes <- getCandidateCodes(
 
 kable(codes)
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig6.png")
 
 ## -----------------------------------------------------------------------------
@@ -122,30 +122,6 @@ kable(codes)
 ## -----------------------------------------------------------------------------
 codes <- getCandidateCodes(
   cdm = cdm,
-  keywords = "arthritis",
-  domains = "Condition",
-  searchViaSynonyms = TRUE
-)
-
-kable(codes)
-
-## ---- echo=FALSE--------------------------------------------------------------
-knitr::include_graphics("mock_db_fig6.png")
-
-## -----------------------------------------------------------------------------
-codes <- getCandidateCodes(
-  cdm = cdm,
-  keywords = "arthritis",
-  domains = "Condition",
-  fuzzyMatch = TRUE,
-  maxDistanceCost = 0.2
-)
-
-kable(codes)
-
-## -----------------------------------------------------------------------------
-codes <- getCandidateCodes(
-  cdm = cdm,
   keywords = c("arthritis", "arthropathy"),
   domains = "Condition",
   searchNonStandard = TRUE
@@ -153,7 +129,7 @@ codes <- getCandidateCodes(
 
 kable(codes)
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig8.png")
 
 ## -----------------------------------------------------------------------------
