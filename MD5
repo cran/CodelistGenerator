@@ -1,4 +1,4 @@
-3c82ae52535f320b9c0a8a222347ebca *DESCRIPTION
+6be9709660338e4891c6232fd7e7ff65 *DESCRIPTION
 94a75010197643ce2160e1d6b5be3c9c *NAMESPACE
 f62cbbc4065b6928709bce10c37f8904 *NEWS.md
 e9536d8dc707669f2de1af958065a0f2 *R/CodelistGenerator-package.R
@@ -12,7 +12,7 @@ ad0fed4a8c9d55d4b6e6c2420bd5c6cd *R/getICD10StandardCodes.R
 bbaf5745c58e6d275b684451f72b3bcb *R/inputValidation.R
 71a2262250d69f60d62709d0473c9834 *R/mockVocabRef.R
 dfa1e6e7e682f0a89033120e28f35c87 *R/runSearch.R
-cace228c40f9ea877c9285433a53e3cf *R/summariseCodeUse.R
+144d10407b0b539593485f5cccb88511 *R/summariseCodeUse.R
 cf794928715019cf81bd51d467156178 *R/utils-pipe.R
 62353758cd6fb5b891c9877f1cdaa1b3 *R/vocabUtilities.R
 596f0aaa4230f76f5fa50eb3a0f79c41 *README.md
@@ -39,13 +39,13 @@ f8032cc2f3f6ac5882b3b9a8c59e28a8 *inst/concepts_for_mock_with_mapped/oa_desc.jso
 8f9fe3443c0fd13d189bece68077d4a5 *inst/concepts_for_mock_with_mapped/oa_with_mapped.json
 a20c1b277775faf8bca11b74f1e0423c *inst/doc/a01_Introduction_to_CodelistGenerator.R
 7030a1e8638521217266dfd96ebdd2f5 *inst/doc/a01_Introduction_to_CodelistGenerator.Rmd
-2c93b07d9fa14c459e9374514b0ed758 *inst/doc/a01_Introduction_to_CodelistGenerator.html
+3b4709be66ed16ff8d03b8cc1eb71178 *inst/doc/a01_Introduction_to_CodelistGenerator.html
 3e83bc8f15c38eea77406333af087ee0 *inst/doc/a02_Candidate_codes_OA.R
 b2d6fddb80867b6ae93f455a9dc67a13 *inst/doc/a02_Candidate_codes_OA.Rmd
-7e07f8b0652815891577c68f8ffcc316 *inst/doc/a02_Candidate_codes_OA.html
+4db3e28f5ef486ad4ca94986c27ec5f8 *inst/doc/a02_Candidate_codes_OA.html
 1f78ebc8e3243e323c29bcaed4736504 *inst/doc/a03_Options_for_CodelistGenerator.R
 ec353cc4cb22f8819ba1a9a00254653d *inst/doc/a03_Options_for_CodelistGenerator.Rmd
-e2918a7d92fde1f986802a14483b5088 *inst/doc/a03_Options_for_CodelistGenerator.html
+cb44250aa37a4354e96c42c4f50a8237 *inst/doc/a03_Options_for_CodelistGenerator.html
 735390ab82c1e631c07bd556f3e7388a *inst/doc/a04_codelists_for_medications.R
 d261d54b2f841d4a0bc75232cb44317f *inst/doc/a04_codelists_for_medications.Rmd
 ebb5f334c183c70828e96b74c58c5e36 *inst/doc/a04_codelists_for_medications.html
