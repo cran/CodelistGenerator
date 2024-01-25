@@ -1,6 +1,6 @@
 #' Summarise code use in patient-level data
 #'
-#' @param x Vector of concept IDs
+#' @param x List of concept IDs
 #' @param cdm cdm_reference via CDMConnector::cdm_from_con()
 #' @param countBy Either "record" for record-level counts or "person" for
 #' person-level counts
@@ -48,7 +48,6 @@ summariseCodeUse <- function(x,
       dplyr::mutate(cohort_name = NA)
   }
   codeUse <- dplyr::bind_rows(codeUse)
-
 
 
  return(codeUse)
@@ -313,6 +312,7 @@ addDomainInfo <- function(codes,
     )
 
   unsupported_domains <- codes %>%
+    dplyr::filter(!is.na(.data$domain_id)) %>%
     dplyr::filter(is.na(.data$table_name)) %>%
     dplyr::pull("domain_id")
 
@@ -365,6 +365,11 @@ if(length(tableName)>0){
         dplyr::filter(.data$cohort_start_date == !!dplyr::sym(dateName[[1]]))
     }
   }
+
+  if(is.null(codeRecords)){
+    return(NULL)
+  }
+
   codeRecords <- codeRecords %>%
     dplyr::mutate(date = !!dplyr::sym(dateName[[1]])) %>%
     dplyr::mutate(year = lubridate::year(date)) %>%
@@ -420,7 +425,7 @@ if(length(tableName)>0){
                           copy = TRUE)
 
       if(workingRecords %>% utils::head(1) %>% dplyr::tally() %>% dplyr::pull("n") >0){
-      codeRecords <- codeRecords %>%
+     codeRecords <- codeRecords %>%
         dplyr::union_all(workingRecords)  %>%
         CDMConnector::computeQuery(
           name = paste0(intermediateTable,"_grr_i"),

@@ -5,15 +5,8 @@ knitr::opts_chunk$set(
 )
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-library(here)
-library(readr)
 library(DBI)
-library(here)
 library(dplyr)
-library(dbplyr)
-library(stringr)
-library(DT)
-library(kableExtra)
 library(CodelistGenerator)
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -38,9 +31,6 @@ library(CodelistGenerator)
 ## ----eval=FALSE---------------------------------------------------------------
 #  library(dplyr)
 #  library(CodelistGenerator)
-#  library(stringr)
-#  library(DT)
-#  library(kableExtra)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  acetaminophen1 <- getCandidateCodes(
@@ -52,7 +42,8 @@ library(CodelistGenerator)
 #  )
 
 ## ----message=FALSE, warning=FALSE, echo=FALSE---------------------------------
-acetaminophen1 <- readRDS(here("vignettes", "medData01.RData"))
+acetaminophen1 <- readRDS(system.file("medData01.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 acetaminophen1 %>% dplyr::glimpse()

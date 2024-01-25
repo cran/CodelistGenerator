@@ -7,9 +7,6 @@ knitr::opts_chunk$set(
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
 library(DBI)
 library(dplyr)
-library(dbplyr)
-library(here)
-library(kableExtra)
 library(CodelistGenerator)
 library(CDMConnector)
 
@@ -30,7 +27,8 @@ codes <- getCandidateCodes(
   includeDescendants = FALSE,
 )
 
-kable(codes)
+codes %>% 
+  glimpse()
 
 ## -----------------------------------------------------------------------------
 codes <- getCandidateCodes(
@@ -40,18 +38,20 @@ codes <- getCandidateCodes(
   includeDescendants = FALSE
 )
 
-kable(codes)
+codes %>% 
+  glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig7.png")
 
 ## -----------------------------------------------------------------------------
-kable(getCandidateCodes(
+getCandidateCodes(
   cdm = cdm,
   keywords = "Musculoskeletal disorder",
   domains = "Condition",
   includeDescendants = TRUE
-))
+) %>% 
+  glimpse()
 
 ## -----------------------------------------------------------------------------
 codes <- getCandidateCodes(
@@ -65,7 +65,8 @@ codes <- getCandidateCodes(
   includeDescendants = FALSE
 )
 
-kable(codes)
+codes %>% 
+  glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig5.png")
@@ -78,7 +79,8 @@ codes <- getCandidateCodes(
   domains = "Condition"
 )
 
-kable(codes)
+codes %>% 
+  glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig4.png")
@@ -91,7 +93,8 @@ codes <- getCandidateCodes(
   includeDescendants = TRUE
 )
 
-kable(codes)
+codes %>% 
+  glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig5.png")
@@ -104,7 +107,8 @@ codes <- getCandidateCodes(
   domains = "Condition"
 )
 
-kable(codes)
+codes %>% 
+  glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig6.png")
@@ -117,7 +121,8 @@ codes <- getCandidateCodes(
   searchInSynonyms = TRUE
 )
 
-kable(codes)
+codes %>% 
+  glimpse()
 
 ## -----------------------------------------------------------------------------
 codes <- getCandidateCodes(
@@ -127,7 +132,8 @@ codes <- getCandidateCodes(
   searchNonStandard = TRUE
 )
 
-kable(codes)
+codes %>% 
+  glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig8.png")
@@ -145,7 +151,8 @@ codes <- getCandidateCodes(
   standardConcept = c("Standard", "Non-standard")
 )
 
-kable(codes)
+codes %>% 
+  glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
 DBI::dbDisconnect(attr(cdm, "dbcon"), shutdown = TRUE)

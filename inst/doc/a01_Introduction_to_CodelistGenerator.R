@@ -5,14 +5,8 @@ knitr::opts_chunk$set(
 )
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-library(here)
-library(readr)
 library(DBI)
-library(here)
 library(dplyr)
-library(stringr)
-library(DT)
-library(kableExtra)
 library(CodelistGenerator)
 library(CDMConnector)
 
@@ -36,7 +30,8 @@ library(CDMConnector)
 #  getVocabVersion(cdm = cdm)
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-vocabVersion <- readRDS(here("vignettes", "introVocab.RData"))
+vocabVersion <- load(system.file("introVocab.RData", 
+                 package = "CodelistGenerator"))
 vocabVersion
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -63,16 +58,12 @@ vocabVersion
 #    collect()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-codesFromDescendants <- readRDS(here("vignettes", "introData01.RData"))
+codesFromDescendants <- readRDS(system.file("introData01.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-datatable(codesFromDescendants,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+codesFromDescendants %>% 
+  glimpse()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  dementiaCodes1 <- getCandidateCodes(
@@ -83,16 +74,12 @@ datatable(codesFromDescendants,
 #  )
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-dementiaCodes1 <- readRDS(here("vignettes", "introData02.RData"))
+dementiaCodes1 <- readRDS(system.file("introData02.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-datatable(dementiaCodes1,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+dementiaCodes1%>% 
+  glimpse()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  codeComparison <- compareCodelists(
@@ -101,26 +88,22 @@ datatable(dementiaCodes1,
 #  )
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-codeComparison <- readRDS(here("vignettes", "introData03.RData"))
+codeComparison <- readRDS(system.file("introData03.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-kable(codeComparison %>%
+codeComparison %>%
   group_by(codelist) %>%
-  tally())
+  tally()
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-datatable(
-  codeComparison %>%
-    filter(codelist == "Only codelist 2"),
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+codeComparison %>%
+  filter(codelist == "Only codelist 2") %>% 
+  glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-icdMappings <- readRDS(here("vignettes", "introData04.RData"))
+icdMappings <- readRDS(system.file("introData04.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  icdMappings <- getMappings(
@@ -130,16 +113,12 @@ icdMappings <- readRDS(here("vignettes", "introData04.RData"))
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-datatable(icdMappings,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+icdMappings %>% 
+  glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-readMappings <- readRDS(here("vignettes", "introData05.RData"))
+readMappings <- readRDS(system.file("introData05.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  readMappings <- getMappings(
@@ -149,11 +128,6 @@ readMappings <- readRDS(here("vignettes", "introData05.RData"))
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-datatable(readMappings,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+readMappings %>% 
+  glimpse()
 

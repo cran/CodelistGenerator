@@ -17,7 +17,7 @@
 
 #' Generate example vocabulary database
 #'
-#' @param backend 'database' (duckdb), 'arrow' (parquet files), or 'data_frame'
+#' @param backend 'database' (duckdb) or 'data_frame'
 #' @return cdm reference with mock vocabulary
 #' @export
 #'
@@ -27,13 +27,25 @@
 #' DBI::dbDisconnect(attr(cdm, "dbcon"), shutdown = TRUE)
 mockVocabRef <- function(backend = "database") {
   errorMessage <- checkmate::makeAssertCollection()
-  checkmate::assertTRUE(backend %in% c("database", "arrow", "data_frame"))
+  checkmate::assertTRUE(backend %in% c("database", "data_frame"))
   checkmate::assertTRUE(length(backend) == 1)
   checkmate::reportAssertions(collection = errorMessage)
 
-  # tables
+  # compulsory tables
+  person <- dplyr::tibble(
+    person_id = 1, gender_concept_id = 0, year_of_birth = 1990,
+    race_concept_id = 0, ethnicity_concept_id = 0
+  )
+  observationPeriod <- dplyr::tibble(
+    observation_period_id = 1, person_id = 1,
+    observation_period_start_date = as.Date("2000-01-01"),
+    observation_period_end_date = as.Date("2025-12-31"),
+    period_type_concept_id = 0
+  )
+
+  # vocab tables
   concept <- data.frame(
-    concept_id = 1:18,
+    concept_id = 1:19,
     concept_name = c(
       "Musculoskeletal disorder",
       "Osteoarthrosis",
@@ -52,23 +64,24 @@ mockVocabRef <- function(backend = "database") {
       "Diseases of the musculoskeletal system and connective tissue",
       "Arthropathies",
       "Arthritis",
-      "OA"
+      "OA",
+      "Other ingredient"
     ),
-    domain_id = c(rep("Condition", 8), "Observation",rep("Drug", 5),
-                  rep("Condition", 4)),
+    domain_id = c(rep("Condition", 8), "Observation", rep("Drug", 5),
+                  rep("Condition", 4), "Drug"),
     vocabulary_id = c(
       rep("SNOMED", 6),
       rep("Read", 2),
       "LOINC", "RxNorm", "OMOP",
       "ATC",
       "RxNorm", "OMOP",
-      "ICD10", "ICD10", "ICD10", "ICD10"
+      "ICD10", "ICD10", "ICD10", "ICD10", "RxNorm"
     ),
     standard_concept = c(
       rep("S", 6),
       rep(NA, 2),
       "S", "S", NA,
-      NA, "S", NA, NA, NA, NA, NA
+      NA, "S", NA, NA, NA, NA, NA, "S"
     ),
     concept_class_id = c(
       rep("Clinical Finding", 6),
@@ -76,7 +89,7 @@ mockVocabRef <- function(backend = "database") {
       "Observation", "Ingredient", "Dose Form",
       "ATC 1st", "Drug", "Dose Form",
       "ICD10 Chapter", "ICD10 SubChapter",
-      "ICD Code","ICD Code"
+      "ICD Code","ICD Code", "Ingredient"
     ),
     concept_code = "1234",
     valid_start_date = NA,
@@ -153,6 +166,12 @@ mockVocabRef <- function(backend = "database") {
     ),
     data.frame(
       ancestor_concept_id = 12L,
+      descendant_concept_id = 13L,
+      min_levels_of_separation = 1,
+      max_levels_of_separation = 1
+    ),
+    data.frame(
+      ancestor_concept_id = 19L,
       descendant_concept_id = 13L,
       min_levels_of_separation = 1,
       max_levels_of_separation = 1
@@ -246,7 +265,9 @@ mockVocabRef <- function(backend = "database") {
       numerator_unit_concept_id = 8576,
       denominator_value = 0.5,
       denominator_unit_concept_id = 8587,
-      box_size = NA
+      box_size = NA,
+      valid_start_date = NA,
+      valid_end_date = NA
     )
   )
 
@@ -260,14 +281,37 @@ mockVocabRef <- function(backend = "database") {
       cdm_etl_reference = NA,
       source_release_date = NA,
       cdm_release_date = NA,
-      cdm_version = NA,
+      cdm_version = "5.3",
       vocabulary_version  = NA
     )
   )
 
+  # achilles tables
+  # count of 400 records for knee osteoarthritis
+  achillesAnalysis <- dplyr::tibble(analysis_id = 1,
+                                    analysis_name = 1)
+  achillesResults <- dplyr::tibble(analysis_id = 401,
+                             stratum_1 = 4,
+                             stratum_2 = NA,
+                             stratum_3 = NA,
+                             count_value = 100)
+  achillesResultsDist <- dplyr::tibble(analysis_id = 1,
+                                  count_value = 5)
+
   # into in-memory duckdb
   db <- DBI::dbConnect(duckdb::duckdb(), ":memory:")
-
+  DBI::dbWithTransaction(db, {
+    DBI::dbWriteTable(db, "person",
+                      person,
+                      overwrite = TRUE
+    )
+  })
+  DBI::dbWithTransaction(db, {
+    DBI::dbWriteTable(db, "observation_period",
+                      observationPeriod,
+                      overwrite = TRUE
+    )
+  })
   DBI::dbWithTransaction(db, {
     DBI::dbWriteTable(db, "concept",
       concept,
@@ -311,40 +355,37 @@ mockVocabRef <- function(backend = "database") {
     )
   })
 
-  cdm <- CDMConnector::cdm_from_con(db)
-  if (backend == "database") {
-    return(cdm)
+  DBI::dbWithTransaction(db, {
+    DBI::dbWriteTable(db, "achilles_analysis",
+                      achillesAnalysis,
+                      overwrite = TRUE
+    )
+  })
+  DBI::dbWithTransaction(db, {
+    DBI::dbWriteTable(db, "achilles_results",
+                      achillesResults,
+                      overwrite = TRUE
+    )
+  })
+  DBI::dbWithTransaction(db, {
+    DBI::dbWriteTable(db, "achilles_results_dist",
+                      achillesResultsDist,
+                      overwrite = TRUE
+    )
+  })
+
+  cdm <- CDMConnector::cdm_from_con(con = db,
+                                    cdm_schema = "main",
+                                    write_schema = "main",
+                                    cdm_name = "mock")
+
+  cdm$achilles_analysis <- dplyr::tbl(db, "achilles_analysis")
+  cdm$achilles_results <- dplyr::tbl(db, "achilles_results")
+  cdm$achilles_results_dist <- dplyr::tbl(db, "achilles_results_dist")
+
+  if (backend %in% c("data_frame")) {
+    cdm <- cdm %>% dplyr::collect()
   }
 
-  if (backend %in% c("arrow", "data_frame")) {
-    dOut <- tempfile()
-    dir.create(dOut)
-    CDMConnector::stow(cdm, dOut)
-
-    if (backend == "arrow") {
-      cdmArrow <- CDMConnector::cdm_from_files(
-        path = dOut,
-        as_data_frame = FALSE, cdm_name = "mock_vocab"
-      )
-      DBI::dbDisconnect(attr(cdm, "dbcon"), shutdown = TRUE)
-      return(cdmArrow)
-    }
-
-    if (backend == "data_frame") {
-      if(utils::packageVersion("CDMConnector")<"1.1.0"){
-        cdmDF <- CDMConnector::cdm_from_files(
-          path = dOut,
-          as_data_frame = TRUE
-        )
-      } else {
-        cdmDF <- CDMConnector::cdm_from_files(
-          path = dOut, cdm_name = "mock",
-          as_data_frame = TRUE
-        )
-      }
-
-      DBI::dbDisconnect(attr(cdm, "dbcon"), shutdown = TRUE)
-      return(cdmDF)
-    }
-  }
+  cdm
 }

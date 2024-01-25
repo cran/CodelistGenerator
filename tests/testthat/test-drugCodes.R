@@ -1,6 +1,6 @@
 test_that("getATCCodes working", {
 
-  backends <- c("database", "arrow", "data_frame")
+  backends <- c("database", "data_frame")
   for (i in seq_along(backends)) {
   cdm <- mockVocabRef(backend = backends[i])
   atcCodes <- getATCCodes(cdm, level = "ATC 1st")
@@ -28,7 +28,7 @@ test_that("getATCCodes working", {
 
 test_that("getATCCodes expected errors", {
 
-  backends <- c("database", "arrow", "data_frame")
+  backends <- c("database", "data_frame")
   for (i in seq_along(backends)) {
     cdm <- mockVocabRef(backend = backends[i])
     expect_error(getATCCodes(cdm, level = "Not an ATC level"))
@@ -44,7 +44,7 @@ test_that("getATCCodes expected errors", {
 
 test_that("getDrugIngredientCodes working", {
 
-  backends <- c("database", "arrow", "data_frame")
+  backends <- c("database", "data_frame")
   for (i in seq_along(backends)) {
     cdm <- mockVocabRef(backend = backends[i])
     ing_codes <- getDrugIngredientCodes(cdm)
@@ -70,6 +70,33 @@ test_that("getDrugIngredientCodes working", {
                                          withConceptDetails = TRUE)
     expect_true(!is.null(ing_codes5[[1]]$concept_name))
 
+
+    # limiting on ingredients
+    ing_codes_all <- getDrugIngredientCodes(cdm,
+                                        ingredientRange = c(1,Inf))
+    ing_codes_mono <- getDrugIngredientCodes(cdm,
+                                             ingredientRange = c(1,1))
+    ing_codes_comb <- getDrugIngredientCodes(cdm,
+                                             ingredientRange = c(2,Inf))
+
+    expect_equal(ing_codes_all, ing_codes)
+    expect_true(all(c(10) %in% ing_codes_mono$adalimumab))
+    expect_null(ing_codes_mono$other_ingredient)
+    expect_true(all(c(13) %in% ing_codes_comb$adalimumab))
+    expect_true(all(c(13) %in% ing_codes_comb$other_ingredient))
+
+    expect_error(getDrugIngredientCodes(cdm,
+                                        ingredientRange = c(3,2)))
+    expect_error(getDrugIngredientCodes(cdm,
+                                        ingredientRange = c(3)))
+    expect_error(getDrugIngredientCodes(cdm,
+                                        ingredientRange = c("a", "b")))
+    expect_error(getDrugIngredientCodes(cdm,
+                                        ingredientRange = c(-1, 25)))
+
+
+
+
     if (backends[[i]] == "database") {
       DBI::dbDisconnect(attr(cdm, "dbcon"), shutdown = TRUE)
     }
@@ -79,7 +106,7 @@ test_that("getDrugIngredientCodes working", {
 
 test_that("getDrugIngredientCodes expected errors", {
 
-  backends <- c("database", "arrow", "data_frame")
+  backends <- c("database","data_frame")
   for (i in seq_along(backends)) {
     cdm <- mockVocabRef(backend = backends[i])
     expect_error(getDrugIngredientCodes(cdm, name = "Not an Ingredient"))

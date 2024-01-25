@@ -1,5 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# CodelistGenerator <img src="man/figures/hexsticker.png" align="right" height="180"/>
+
 <!-- badges: start -->
 
 [![CRAN
@@ -8,8 +11,6 @@ status](https://www.r-pkg.org/badges/version/CodelistGenerator)](https://CRAN.R-
 [![R-CMD-check](https://github.com/darwin-eu/CodelistGenerator/workflows/R-CMD-check/badge.svg)](https://github.com/darwin-eu/CodelistGenerator/actions)
 [![Lifecycle:Stable](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
-
-# CodelistGenerator
 
 ## Installation
 
@@ -74,7 +75,7 @@ aspirin.
 
 ``` r
 getDrugIngredientCodes(cdm = cdm, name = "aspirin")
-#> $`Ingredient: Aspirin (1112807)`
+#> $aspirin
 #> [1]  1112807 19059056
 ```
 
@@ -83,10 +84,10 @@ so.
 
 ``` r
 getDrugIngredientCodes(cdm = cdm, name = "aspirin", withConceptDetails = TRUE)
-#> $`Ingredient: Aspirin (1112807)`
+#> $aspirin
 #> # A tibble: 2 × 4
 #>   concept_id concept_name              domain_id vocabulary_id
-#>        <dbl> <chr>                     <chr>     <chr>        
+#>        <int> <chr>                     <chr>     <chr>        
 #> 1    1112807 Aspirin                   Drug      RxNorm       
 #> 2   19059056 Aspirin 81 MG Oral Tablet Drug      RxNorm
 ```
@@ -97,11 +98,11 @@ name argument and all ingredients will be returned.
 ``` r
 ing <- getDrugIngredientCodes(cdm = cdm)
 ing$aspirin
-#> NULL
+#> [1]  1112807 19059056
 ing$diclofenac
-#> NULL
+#> [1] 1124300
 ing$celecoxib
-#> NULL
+#> [1] 1118084
 ```
 
 ## Systematic search using CodelistGenerator
@@ -125,12 +126,12 @@ asthma_codes1 %>%
   glimpse()
 #> Rows: 2
 #> Columns: 6
-#> $ concept_id       <dbl> 4051466, 317009
-#> $ concept_name     <chr> "Childhood asthma", "Asthma"
-#> $ domain_id        <chr> "condition", "condition"
-#> $ concept_class_id <chr> "clinical finding", "clinical finding"
-#> $ vocabulary_id    <chr> "snomed", "snomed"
+#> $ concept_id       <int> 4051466, 317009
 #> $ found_from       <chr> "From initial search", "From initial search"
+#> $ concept_name     <chr> "Childhood asthma", "Asthma"
+#> $ domain_id        <chr> "Condition", "Condition"
+#> $ vocabulary_id    <chr> "SNOMED", "SNOMED"
+#> $ standard_concept <chr> "standard", "standard"
 ```
 
 But perhaps we want to exclude certain concepts as part of the search
@@ -147,12 +148,12 @@ asthma_codes2 %>%
   glimpse()
 #> Rows: 1
 #> Columns: 6
-#> $ concept_id       <dbl> 317009
-#> $ concept_name     <chr> "Asthma"
-#> $ domain_id        <chr> "condition"
-#> $ concept_class_id <chr> "clinical finding"
-#> $ vocabulary_id    <chr> "snomed"
+#> $ concept_id       <int> 317009
 #> $ found_from       <chr> "From initial search"
+#> $ concept_name     <chr> "Asthma"
+#> $ domain_id        <chr> "Condition"
+#> $ vocabulary_id    <chr> "SNOMED"
+#> $ standard_concept <chr> "standard"
 ```
 
 We can compare these two code lists like so
@@ -161,7 +162,7 @@ We can compare these two code lists like so
 compareCodelists(asthma_codes1, asthma_codes2)
 #> # A tibble: 2 × 3
 #>   concept_id concept_name     codelist       
-#>        <dbl> <chr>            <chr>          
+#>        <int> <chr>            <chr>          
 #> 1    4051466 Childhood asthma Only codelist 1
 #> 2     317009 Asthma           Both
 ```
@@ -181,30 +182,37 @@ Gastrointestinal_hemorrhage %>%
   glimpse()
 #> Rows: 1
 #> Columns: 6
-#> $ concept_id       <dbl> 192671
-#> $ concept_name     <chr> "Gastrointestinal hemorrhage"
-#> $ domain_id        <chr> "condition"
-#> $ concept_class_id <chr> "clinical finding"
-#> $ vocabulary_id    <chr> "snomed"
+#> $ concept_id       <int> 192671
 #> $ found_from       <chr> "From initial search"
+#> $ concept_name     <chr> "Gastrointestinal hemorrhage"
+#> $ domain_id        <chr> "Condition"
+#> $ vocabulary_id    <chr> "SNOMED"
+#> $ standard_concept <chr> "standard"
 ```
 
 ## Summarising code use
 
 ``` r
-summariseCodeUse(asthma_codes1$concept_id,  
+summariseCodeUse(list("asthma" = asthma_codes1$concept_id),  
                  cdm = cdm) %>% 
   glimpse()
-#> Rows: 230
-#> Columns: 10
-#> $ group_name          <chr> "Codelist", "By concept", "By concept", "Codelist"…
-#> $ group_level         <chr> "Overall", "Childhood asthma (4051466)", "Asthma (…
-#> $ strata_name         <chr> "Overall", "Overall", "Overall", "Year", "Year", "…
-#> $ strata_level        <chr> "Overall", "Overall", "Overall", "1914", "1915", "…
-#> $ variable_name       <chr> "Record count", "Record count", "Record count", "R…
-#> $ variable_level      <chr> "Overall", "Overall", "Overall", "Overall", "Overa…
-#> $ variable_type       <chr> "Numeric", "Numeric", "Numeric", "Numeric", "Numer…
-#> $ estimate_type       <chr> "Count", "Count", "Count", "Count", "Count", "Coun…
-#> $ estimate            <int> 101, 96, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-#> $ estimate_suppressed <chr> "FALSE", "FALSE", "FALSE", "TRUE", "TRUE", "TRUE",…
+#> Rows: 6
+#> Columns: 17
+#> $ group_name            <chr> "Codelist", "By concept", "By concept", "Codelis…
+#> $ group_level           <chr> "Overall", "Standard concept: Childhood asthma (…
+#> $ strata_name           <chr> "Overall", "Overall", "Overall", "Overall", "Ove…
+#> $ strata_level          <chr> "Overall", "Overall", "Overall", "Overall", "Ove…
+#> $ variable_name         <chr> "Record count", "Record count", "Record count", …
+#> $ variable_level        <chr> "Overall", "Overall", "Overall", "Overall", "Ove…
+#> $ variable_type         <chr> "Numeric", "Numeric", "Numeric", "Numeric", "Num…
+#> $ estimate_type         <chr> "Count", "Count", "Count", "Count", "Count", "Co…
+#> $ estimate              <int> 101, 96, 5, 101, 96, 5
+#> $ estimate_suppressed   <chr> "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FA…
+#> $ standard_concept_name <chr> NA, "Childhood asthma", "Asthma", NA, "Childhood…
+#> $ standard_concept_id   <int> NA, 4051466, 317009, NA, 4051466, 317009
+#> $ source_concept_name   <chr> NA, "Childhood asthma", "Asthma", NA, "Childhood…
+#> $ source_concept_id     <int> NA, 4051466, 317009, NA, 4051466, 317009
+#> $ domain_id             <chr> NA, "condition", "condition", NA, "condition", "…
+#> $ codelist_name         <chr> "asthma", "asthma", "asthma", "asthma", "asthma"…
+#> $ cohort_name           <lgl> NA, NA, NA, NA, NA, NA
 ```

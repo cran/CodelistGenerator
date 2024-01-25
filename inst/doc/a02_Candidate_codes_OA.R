@@ -5,15 +5,8 @@ knitr::opts_chunk$set(
 )
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-library(here)
-library(readr)
 library(DBI)
-library(here)
 library(dplyr)
-library(dbplyr)
-library(stringr)
-library(DT)
-library(kableExtra)
 library(CodelistGenerator)
 library(CDMConnector)
 
@@ -47,7 +40,8 @@ library(CDMConnector)
 #  )
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-oaCodes1 <- readRDS(here("vignettes", "optionsData01.RData"))
+oaCodes1 <- readRDS(system.file("optionsData01.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  oaCodes1 <- getCandidateCodes(
@@ -65,16 +59,12 @@ oaCodes1 <- readRDS(here("vignettes", "optionsData01.RData"))
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-datatable(oaCodes1,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 250)
-  )
-)
+oaCodes1 %>% 
+  glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-oaCodes2 <- readRDS(here("vignettes", "optionsData02.RData"))
+oaCodes2 <- readRDS(system.file("optionsData02.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  oaCodes2 <- getCandidateCodes(
@@ -96,16 +86,12 @@ newCodes1To2 <- compareCodelists(oaCodes1, oaCodes2) %>%
   filter(codelist == "Only codelist 2") %>%
   select(-"codelist")
 
-datatable(newCodes1To2,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+newCodes1To2 %>% 
+  glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-oaCodes3 <- readRDS(here("vignettes", "optionsData03.RData"))
+oaCodes3 <- readRDS(system.file("optionsData03.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  oaCodes3 <- getCandidateCodes(
@@ -127,16 +113,12 @@ newCodes1To3 <- compareCodelists(oaCodes1, oaCodes3) %>%
   filter(codelist == "Only codelist 2") %>%
   select(-"codelist")
 
-datatable(newCodes1To3,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+newCodes1To3 %>% 
+  glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-oaCodes4 <- readRDS(here("vignettes", "optionsData04.RData"))
+oaCodes4 <- readRDS(system.file("optionsData04.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  oaCodes4 <- getCandidateCodes(
@@ -158,16 +140,12 @@ newCodes1To4 <- compareCodelists(oaCodes1, oaCodes4) %>%
   filter(codelist == "Only codelist 2") %>%
   select(-"codelist")
 
-datatable(newCodes1To4,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+newCodes1To4 %>% 
+  glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-oaCodes5 <- readRDS(here("vignettes", "optionsData04.RData"))
+oaCodes5 <- readRDS(system.file("optionsData05.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  oaCodes5 <- getCandidateCodes(
@@ -189,16 +167,12 @@ newCodes1To5 <- compareCodelists(oaCodes1, oaCodes5) %>%
   filter(codelist == "Only codelist 2") %>%
   select(-"codelist")
 
-datatable(newCodes1To5,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+newCodes1To5 %>% 
+  glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
-oaCodes8 <- readRDS(here("vignettes", "optionsData07.RData"))
+oaCodes8 <- readRDS(system.file("optionsData07.RData", 
+                                            package = "CodelistGenerator"))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  oaCodes8 <- getCandidateCodes(
@@ -220,11 +194,6 @@ newCodes1To8 <- compareCodelists(oaCodes1, oaCodes8) %>%
   filter(codelist == "Only codelist 2") %>%
   select(-"codelist")
 
-datatable(newCodes1To8,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    lengthMenu = c(10, 20, 50)
-  )
-)
+newCodes1To8 %>% 
+  glimpse()
 
