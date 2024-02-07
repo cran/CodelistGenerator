@@ -2,7 +2,7 @@
 % Please edit documentation in R/codesInUse.R
 \name{codesInUse}
 \alias{codesInUse}
-\title{Get standard codes used in the database}
+\title{Get codes used in the database}
 \usage{
 codesInUse(
   cdm,
@@ -16,8 +16,16 @@ codesInUse(
 \item{table}{cdm table}
 }
 \value{
-A vector containing standard concepts present in the database
+A list of integers indicating codes being used in the database.
 }
 \description{
-Get standard codes used in the database
+Get codes used in the database
+}
+\examples{
+\dontrun{
+cdm <- mockVocabRef("database")
+x <- codesInUse(cdm = cdm)
+x
+CDMConnector::cdmDisconnect(cdm)
+}
 }

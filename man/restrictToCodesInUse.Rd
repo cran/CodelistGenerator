@@ -19,8 +19,23 @@ restrictToCodesInUse(
 \item{table}{cdm table}
 }
 \value{
-The codelist with only concepts in the database retained
+A list of integers indicating the codes used in the database
 }
 \description{
 Filter a codelist to keep only the codes used in the database
+}
+\examples{
+\dontrun{
+cdm <- mockVocabRef("database")
+codes <- getCandidateCodes(cdm = cdm,
+                           keywords = "arthritis",
+                           domains = "Condition",
+                           includeDescendants = FALSE)
+x <- restrictToCodesInUse(list("cs1" = codes$concept_id,
+                               "cs2" = 999),
+                                cdm = cdm)
+
+x
+CDMConnector::cdmDisconnect(cdm)
+}
 }

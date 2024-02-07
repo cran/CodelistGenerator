@@ -14,7 +14,7 @@ library(CDMConnector)
 knitr::include_graphics("mock_db_fig1.png")
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE, results='hide'------------------
-cdm <- mockVocabRef()
+cdm <- mockVocabRef(backend = "data_frame")
 
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::include_graphics("mock_db_fig2.png")
@@ -153,7 +153,4 @@ codes <- getCandidateCodes(
 
 codes %>% 
   glimpse()
-
-## ----echo=FALSE---------------------------------------------------------------
-DBI::dbDisconnect(attr(cdm, "dbcon"), shutdown = TRUE)
 
