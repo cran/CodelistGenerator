@@ -1,6 +1,6 @@
-ce68484e1ea288f9119bc87f889f6205 *DESCRIPTION
+98bf51a786ba1edce7d818a4df9ab122 *DESCRIPTION
 f98a0a132a41a61383d4edd112f94e3e *NAMESPACE
-80e6beba09d7ae903ba5125da3ac5711 *NEWS.md
+a684b92fcbf5a65535fe87cd7c4ceb85 *NEWS.md
 e9536d8dc707669f2de1af958065a0f2 *R/CodelistGenerator-package.R
 8018eeb55722505c14ecbf18332965f5 *R/achillesCodeUse.R
 412a90e190d188d53060b2da4f41bef9 *R/checks.R
@@ -15,7 +15,7 @@ fd87372148cb8659d4f5c03c425e75bd *R/findUnmappedCodes.R
 97fa5abeeb9169bcde24f8e3389f549f *R/getMappings.R
 bbaf5745c58e6d275b684451f72b3bcb *R/inputValidation.R
 173fe990d01f5e14ea8966aaac134d2e *R/mockVocabRef.R
-5de301d37660309537d61031218d5561 *R/runSearch.R
+a37fef23d9fd6ccef3289b779720466d *R/runSearch.R
 980ace6ee205a57e0ad87c2a2fe03221 *R/summariseCodeUse.R
 cf794928715019cf81bd51d467156178 *R/utils-pipe.R
 58d006cd56920afa3c7300ee550701c7 *R/vocabUtilities.R
@@ -49,7 +49,7 @@ e7f76c69c99c3e1aa52be97896185269 *inst/doc/a02_Candidate_codes_OA.R
 88be3491fc75c5ca09ee7748e9f9a619 *inst/doc/a02_Candidate_codes_OA.html
 5e806a6ae585a539151fc9cf5580bb1f *inst/doc/a03_Options_for_CodelistGenerator.R
 01075fcadd631710729049c38fb0372c *inst/doc/a03_Options_for_CodelistGenerator.Rmd
-ce7521362c7f52801f12bec721941a82 *inst/doc/a03_Options_for_CodelistGenerator.html
+4397fb540b8f80d0a027905e06e729dc *inst/doc/a03_Options_for_CodelistGenerator.html
 4677ab6da3ceb9b2e87fbae866449b72 *inst/doc/a04_codelists_for_medications.R
 89b1e3f3b46bc339cccd326161799095 *inst/doc/a04_codelists_for_medications.Rmd
 176ed80b77a3b6025112aed915a591fa *inst/doc/a04_codelists_for_medications.html
@@ -109,7 +109,7 @@ dad9dfe4a3d8ccd470383801eaee49ff *tests/testthat/test-compareCodelists.R
 6cd1a46e33b67bb55846dd9a10b8f5c7 *tests/testthat/test-drugCodes.R
 2d4823b054329b54c6cb1f5bb5332cb8 *tests/testthat/test-findOrphanCodes.R
 4e95b6941595c85b2d4136f8b1bde81a *tests/testthat/test-findUnmappedCodes.R
-e9662f8ed40c3c5ded6575143b77d355 *tests/testthat/test-getCandidateCodes.R
+6f126fab2b242f47db5e65b29a6c0b08 *tests/testthat/test-getCandidateCodes.R
 a0cc98de5b882828e553f1118d3838d4 *tests/testthat/test-getICD10StandardCodes.R
 a26a4c2b6047139c5118d8168205d9ea *tests/testthat/test-getMappings.R
 8a4dd1446921fc8ea6648a1afb1e6007 *tests/testthat/test-mockVocabRef.R
