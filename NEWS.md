@@ -1,3 +1,6 @@
+# CodelistGenerator 2.2.3
+* Fix for forthcoming breaking change in dependency omopgenerics
+
 # CodelistGenerator 2.2.2
 * Fix for edge case with multiple exclusion criteria
 
