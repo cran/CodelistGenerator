@@ -1,6 +1,6 @@
-# Copyright 2023 DARWIN EU®
+# Copyright 2024 DARWIN EU®
 #
-# This file is part of IncidencePrevalence
+# This file is part of CodelistGenerator
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -390,14 +390,19 @@ getDescendantsOnly <- function(cdm, conceptId, ingredientRange, doseForm) {
 }
 
 getDescendantsAndAncestor <- function(cdm, conceptId, ingredientRange, doseForm) {
+  conceptIdDbTable <- omopgenerics::uniqueTableName()
+  cdm <- omopgenerics::insertTable(cdm = cdm,
+                            name = conceptIdDbTable,
+                            table = dplyr::tibble(ancestor_concept_id = as.integer(conceptId)),
+                            overwrite = TRUE)
 
   descendants <- cdm$concept_ancestor %>%
-    dplyr::inner_join(dplyr::tibble(ancestor_concept_id = as.integer(conceptId)),
-                      by = "ancestor_concept_id",
-                      copy = TRUE) %>%
+    dplyr::inner_join(cdm[[conceptIdDbTable]],
+                      by = "ancestor_concept_id") %>%
     dplyr::rename("concept_id" = "descendant_concept_id") %>%
     dplyr::left_join(cdm$concept,
-                     by = "concept_id")
+                     by = "concept_id") %>%
+    dplyr::compute()
 
   descendants <- addIngredientCount(cdm = cdm, concepts = descendants) %>%
     dplyr::filter(.data$ingredient_count >= !!ingredientRange[1],
@@ -449,6 +454,8 @@ descendants$ancestor_concept_id <- stringr::str_replace_all(
                                      conceptDoseForms = descendantDoseForms,
                                      doseForm = doseForm)
   }
+
+  CDMConnector::dropTable(cdm, conceptIdDbTable)
 
   # nb conceptId will also be a descendant of itself
   return(descendants)
@@ -514,7 +521,7 @@ addIngredientCount <- function(cdm, concepts) {
                         dplyr::select("concept_id"),
                by = c("ancestor_concept_id" = "concept_id"))
 
- ingredient_count <- concepts%>%
+ ingredient_count <- concepts %>%
    dplyr::select("concept_id") %>%
    dplyr::distinct() %>%
    dplyr::left_join(ingredient_ancestor,
@@ -529,7 +536,111 @@ addIngredientCount <- function(cdm, concepts) {
              by = "concept_id")
  if(!is.null(attr(cdm, "dbcon"))){
    concepts <- concepts %>%
-   CDMConnector::computeQuery()}
+   dplyr::compute()}
 
  concepts
+}
+
+
+#' Get relationship ID values from the concept relationship table
+#'
+#' @param cdm A cdm reference
+#' @param standardConcept1  Character vector with one or more of "Standard",
+#' "Classification", and "Non-standard". These correspond to the flags used
+#' for the standard_concept field in the concept table of the cdm.
+#' @param standardConcept2  Character vector with one or more of "Standard",
+#' "Classification", and "Non-standard". These correspond to the flags used
+#' for the standard_concept field in the concept table of the cdm.
+#' @param domains1 Character vector with one or more of the OMOP CDM domain.
+#' @param domains2 Character vector with one or more of the OMOP CDM domain.
+#'
+#' @return A character vector with unique values
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' cdm <- mockVocabRef()
+#' getRelationshipId(cdm = cdm)
+#' CDMConnector::cdmDisconnect(cdm)
+#' }
+getRelationshipId <- function(cdm,
+                              standardConcept1 = "standard",
+                              standardConcept2 = "standard",
+                              domains1 = "condition",
+                              domains2 = "condition") {
+
+  if (!"cdm_reference" %in% class(cdm)) {
+    cli::cli_abort("cdm must be a cdm_reference")
+  }
+  if (!all(tolower(standardConcept1) %in% c("standard", "non-standard", "classification"))) {
+    cli::cli_abort(
+      paste0(
+        "standardConcept1 must be one or more of",
+        "standard, non-standard, and classification"
+      )
+    )
+  }
+  if (!all(tolower(standardConcept2) %in% c("standard", "non-standard", "classification"))) {
+    cli::cli_abort(
+      paste0(
+        "standardConcept2 must be one or more of",
+        "standard, non-standard, and classification"
+      )
+    )
+  }
+  if (!is.character(domains1)) {
+    cli::cli_abort("domains1 must be a character vector")
+  }
+  if (!is.character(domains2)) {
+    cli::cli_abort("domains2 must be a character vector")
+  }
+
+
+  standardConcept1 <- tolower(standardConcept1)
+  standardConcept2 <- tolower(standardConcept2)
+  domains1 <- tolower(domains1)
+  domains2 <- tolower(domains2)
+
+  cdm[["concept"]] <- cdm[["concept"]] %>%
+    dplyr::mutate(
+      domain_id = tolower(.data$domain_id),
+      standard_concept = dplyr::case_when(
+        is.na(.data$standard_concept) ~ "non-standard",
+        .data$standard_concept == "C" ~ "classification",
+        .data$standard_concept == "S" ~ "standard",
+        .default = as.character(.data$standard_concept)
+      )
+    )
+
+  sort(
+    cdm[["concept_relationship"]] |>
+      dplyr::left_join(
+        cdm[["concept"]]  |>
+          dplyr::select(
+            "concept_id",
+            "domain_id_1" = "domain_id",
+            "standard_concept_1" = "standard_concept"
+          ),
+        by = c("concept_id_1" = "concept_id")
+      ) |>
+      dplyr::left_join(
+        cdm[["concept"]] |>
+          dplyr::select(
+            "concept_id",
+            "domain_id_2" = "domain_id",
+            "standard_concept_2" = "standard_concept"
+          ),
+        by = c("concept_id_2" = "concept_id")
+      ) |>
+      dplyr::filter(
+        .data$standard_concept_1 %in% .env$standardConcept1,
+        .data$standard_concept_2 %in% .env$standardConcept2,
+        .data$domain_id_1 %in% .env$domains1,
+        .data$domain_id_2 %in% .env$domains2
+      ) |>
+      dplyr::select("relationship_id") |>
+      dplyr::distinct() |>
+      dplyr::pull()
+  )
+
 }
