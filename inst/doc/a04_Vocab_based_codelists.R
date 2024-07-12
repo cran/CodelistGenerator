@@ -36,10 +36,12 @@ acetaminophen_codes$acetaminophen
 acetaminophen_codes_with_details <- getDrugIngredientCodes(
   cdm = cdm,
   name = "acetaminophen",
-  withConceptDetails = TRUE
+  type = "codelist_with_details"
 )
 
-acetaminophen_codes_with_details$acetaminophen |> 
+acetaminophen_codes_with_details
+
+acetaminophen_codes_with_details[[1]] |> 
   glimpse()
 
 ## -----------------------------------------------------------------------------
@@ -47,10 +49,12 @@ acetaminophen_two_or_more_ingredients <- getDrugIngredientCodes(
   cdm = cdm,
   name = "acetaminophen",
   ingredientRange = c(2,Inf),
-  withConceptDetails = TRUE
+  type = "codelist_with_details"
 )
 
-acetaminophen_two_or_more_ingredients$acetaminophen |> 
+acetaminophen_two_or_more_ingredients
+
+acetaminophen_two_or_more_ingredients[[1]] |> 
   glimpse()
 
 ## -----------------------------------------------------------------------------
@@ -58,10 +62,12 @@ acetaminophen_one_ingredient <- getDrugIngredientCodes(
   cdm = cdm,
   name = "acetaminophen",
   ingredientRange = c(1,1),
-  withConceptDetails = TRUE
+  type = "codelist_with_details"
 )
 
-acetaminophen_one_ingredient$acetaminophen |> 
+acetaminophen_one_ingredient
+
+acetaminophen_one_ingredient[[1]] |> 
   glimpse()
 
 ## -----------------------------------------------------------------------------
@@ -69,11 +75,10 @@ acetaminophen_injections <- getDrugIngredientCodes(
   cdm = cdm,
   name = "acetaminophen",
   doseForm = "injection",
-  withConceptDetails = TRUE
+  type = "codelist_with_details"
 )
 
-acetaminophen_injections$acetaminophen |> 
-  glimpse()
+acetaminophen_injections
 
 ## -----------------------------------------------------------------------------
 acetaminophen_heparin_codes <- getDrugIngredientCodes(
@@ -82,8 +87,6 @@ acetaminophen_heparin_codes <- getDrugIngredientCodes(
   )
 
 acetaminophen_heparin_codes
-acetaminophen_heparin_codes$acetaminophen
-acetaminophen_heparin_codes$heparin 
 
 ## -----------------------------------------------------------------------------
 ingredient_codes <- getDrugIngredientCodes(cdm = cdm)
@@ -113,8 +116,9 @@ arthropathy_codes$arthropathies
 arthropathy_codes <- getICD10StandardCodes(
   cdm = cdm_mock,
   name = "arthropathies", 
-  withConceptDetails = TRUE
+  type = "codelist_with_details"
 )
 arthropathy_codes
-arthropathy_codes$arthropathies
+
+arthropathy_codes[[1]]
 

@@ -23,9 +23,8 @@
 #' @param includeDescendants If FALSE only direct mappings from ICD-10 codes
 #' to standard codes will be returned. If TRUE descendants of standard concepts
 #' will also be included.
-#' @param withConceptDetails If FALSE a vector of concept IDs will be returned
-#' for each ICD group If TRUE a tibble will be returned with additional
-#' information on the identified concepts.
+#' @param type Can be "codelist", "codelist_with_details", or
+#' "concept_set_expression"
 #'
 #' @return A named list, with each element containing the corresponding
 #' standard codes (and descendants) of ICD chapters and sub-chapters
@@ -47,7 +46,7 @@ getICD10StandardCodes <- function(cdm,
                                   ),
                                   name = NULL,
                                   includeDescendants = TRUE,
-                                  withConceptDetails = FALSE) {
+                                  type = "codelist") {
   errorMessage <- checkmate::makeAssertCollection()
   checkDbType(cdm = cdm, type = "cdm_reference", messageStore = errorMessage)
   levelCheck <- all(level %in%
@@ -133,7 +132,7 @@ getICD10StandardCodes <- function(cdm,
       }
   }
 
-  if(isTRUE(withConceptDetails)) {
+  if(type == "codelist_with_details") {
     ICD10MapsTo <- ICD10MapsTo %>%
       dplyr::left_join(cdm[["concept"]] %>%
                          dplyr::select("concept_id", "concept_name",
@@ -141,7 +140,12 @@ getICD10StandardCodes <- function(cdm,
                        by = "concept_id")
     # split into list
     ICD10StandardCodes <- ICD10MapsTo %>%
-      dplyr::collect()
+      dplyr::collect() %>%
+      dplyr::left_join(cdm[["concept"]] %>% dplyr::select("concept_id", "concept_code"),
+                       by = "concept_id",
+                       copy = T) %>%
+      dplyr::mutate(name = paste0(.data$concept_code,"_", .data$name))
+
     ICD10StandardCodes <- split(
       x = ICD10StandardCodes,
       f = as.factor(ICD10StandardCodes$name),
@@ -150,16 +154,22 @@ getICD10StandardCodes <- function(cdm,
   } else {
     # split into list (only returning vector of concept ids)
     ICD10StandardCodes <- ICD10MapsTo %>%
-      dplyr::collect()
+      dplyr::collect() %>%
+      dplyr::left_join(cdm[["concept"]] %>% dplyr::select("concept_id", "concept_code"),
+                       by = "concept_id",
+                       copy = T) %>%
+      dplyr::mutate(name = paste0(.data$concept_code,"_", .data$name))
     ICD10StandardCodes <- split(
       x = ICD10StandardCodes$concept_id,
       f = ICD10StandardCodes$name
     )
   }
 
-
-  if(isFALSE(withConceptDetails)){
+  if(type == "codelist"){
     ICD10StandardCodes <- omopgenerics::newCodelist(ICD10StandardCodes)
+  } else{
+    ICD10StandardCodes <- omopgenerics::newCodelistWithDetails(
+      ICD10StandardCodes)
   }
 
   return(ICD10StandardCodes)

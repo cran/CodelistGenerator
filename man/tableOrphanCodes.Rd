@@ -2,7 +2,7 @@
 % Please edit documentation in R/tableAchillesCodeUse.R
 \name{tableOrphanCodes}
 \alias{tableOrphanCodes}
-\title{Format the result of summariseOrphanCodes into a visual table.}
+\title{Format the result of summariseOrphanCodes into a table.}
 \usage{
 tableOrphanCodes(
   result,
@@ -11,9 +11,7 @@ tableOrphanCodes(
   conceptId = TRUE,
   standard = TRUE,
   vocabulary = TRUE,
-  relationship = TRUE,
   groupColumns = NULL,
-  settings = character(),
   excludeColumns = c("result_id", "estimate_type"),
   .options = list()
 )
@@ -36,12 +34,8 @@ displayed.}
 
 \item{vocabulary}{If TRUE vocabulary id will be displayed.}
 
-\item{relationship}{If TRUE relationship id will be displayed.}
-
 \item{groupColumns}{Columns to use as group labels. Allowed columns are
 \code{cdm_name} and/or \code{codelist_name}.}
-
-\item{settings}{Vector with the settings columns to display.}
 
 \item{excludeColumns}{Columns to drop from the output table.}
 
@@ -54,7 +48,7 @@ A table with a formatted version of the summariseOrphanCodes
 result.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+Format the result of summariseOrphanCodes into a table.
 }
 \examples{
 \dontrun{

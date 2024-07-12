@@ -1,6 +1,4 @@
-#' Format the result of summariseCodeUse into a visual table.
-#'
-#' `r lifecycle::badge("experimental")`
+#' Format the result of summariseCodeUse into a table.
 #'
 #' @param result A summarised result with results of the type "code_use".
 #' @param type Type of desired formatted table, possibilities: "gt",
@@ -49,6 +47,20 @@ tableCodeUse <- function(result,
                          excludeColumns = c("result_id", "estimate_type", "additional_name", "additional_level"),
                          .options = list()) {
 
+  if(nrow(result) == 0){
+    cli::cli_warn("Result object is empty")
+    return(emptyResultTable(type = type))
+  }
+
+  result <- result |>
+    visOmopResults::filterSettings(.data$result_type == "code_use")
+
+  if(nrow(result) == 0){
+    cli::cli_warn("No code use results found in result object")
+    return(emptyResultTable(type = type))
+  }
+
+
   # checks
   if (inherits(groupColumns, "list")) {
     checkmate::assertList(groupColumns, len = 1)
@@ -82,9 +94,7 @@ tableCodeUse <- function(result,
   return(x)
 }
 
-#' Format the result of summariseCohortCodeUse into a visual table.
-#'
-#' `r lifecycle::badge("experimental")`
+#' Format the result of summariseCohortCodeUse into a table.
 #'
 #' @param result A summarised result with results of the type "cohort_code_use".
 #' @param type Type of desired formatted table, possibilities: "gt",

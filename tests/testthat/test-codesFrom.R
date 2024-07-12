@@ -5,7 +5,8 @@ test_that("test inputs - mock", {
     # mock db
     cdm <- mockVocabRef(backends[[i]])
 
-  # expected errors
+
+    # expected errors
   expect_error(codesFromConceptSet())
   expect_error(codesFromConceptSet(cdm = cdm))
   expect_error(codesFromConceptSet(cdm = cdm, path = 1))
@@ -50,6 +51,21 @@ test_that("test inputs - mock", {
 
   x <- codesFromConceptSet(
     cdm = cdm, path =  system.file(package = "CodelistGenerator",
+                                   "concepts_for_mock"),
+    type = "codelist_with_details"
+  )
+  expect_true(inherits(x, "codelist_with_details"))
+
+  x <- codesFromConceptSet(
+    cdm = cdm, path =  system.file(package = "CodelistGenerator",
+                                   "concepts_for_mock"),
+    type = "concept_set_expression"
+  )
+  expect_true(inherits(x, "concept_set_expression") |
+                inherits(x, "conceptSetExpression"))
+
+  x <- codesFromConceptSet(
+    cdm = cdm, path =  system.file(package = "CodelistGenerator",
                                    "concepts_for_mock_with_exclude")
   )
   expect_true(all(c("3", "5") %in% x$oa_with_excluded))
@@ -60,7 +76,7 @@ test_that("test inputs - mock", {
     cdm = cdm,
     path =  system.file(package = "CodelistGenerator",
                                    "concepts_for_mock"),
-    withConceptDetails = TRUE
+    type = "codelist_with_details"
   )
   expect_true("Arthritis" %in% x$oa_no_desc$concept_name)
   expect_true(3 %in% x$oa_no_desc$concept_id)
@@ -81,6 +97,20 @@ test_that("test inputs - mock", {
   expect_true(all(c("3", "5") %in% x[["OA"]]))
   expect_true(!c("4") %in% x[["OA"]])
 
+  x <- codesFromCohort(
+    cdm = cdm, path =  system.file(package = "CodelistGenerator",
+                                   "cohorts_for_mock_with_exclude"),
+    type = "codelist_with_details"
+  )
+  expect_true(inherits(x, "codelist_with_details"))
+
+  x <- codesFromCohort(
+    cdm = cdm, path =  system.file(package = "CodelistGenerator",
+                                   "cohorts_for_mock_with_exclude"),
+    type = "concept_set_expression"
+  )
+  expect_true(inherits(x, "concept_set_expression") |
+              inherits(x, "conceptSetExpression"))
 
   # we´ll get an error if we have the same name concept set in multiple cohorts,
   # but with different definitions
@@ -90,7 +120,8 @@ test_that("test inputs - mock", {
   ))
 
   if (backends[[i]] == "database") {
-  CDMConnector::cdmDisconnect(cdm)}
+  CDMConnector::cdmDisconnect(cdm)
+    }
 
   }
 
@@ -98,6 +129,7 @@ test_that("test inputs - mock", {
 
 test_that("test inputs - redshift", {
   testthat::skip_if(Sys.getenv("CDM5_REDSHIFT_DBNAME") == "")
+  testthat::skip_if_offline()
 
   db <-  DBI::dbConnect(RPostgres::Redshift(),
                         dbname   = Sys.getenv("CDM5_REDSHIFT_DBNAME"),
@@ -125,7 +157,7 @@ test_that("test inputs - redshift", {
     cdm = cdm,
     path =  system.file(package = "CodelistGenerator",
                         "concepts"),
-    withConceptDetails = TRUE
+    type = "codelist_with_details"
   )
   expect_true("Influenza" %in% x$influenza$concept_name)
 
@@ -133,7 +165,7 @@ test_that("test inputs - redshift", {
     cdm = cdm,
     path =  system.file(package = "CodelistGenerator",
                         "cohorts"),
-    withConceptDetails = TRUE
+    type = "codelist_with_details"
   )
   expect_true("Influenza" %in% x$influenza$concept_name)
 
@@ -142,7 +174,7 @@ test_that("test inputs - redshift", {
     cdm = cdm,
     path =  system.file(package = "CodelistGenerator",
                         "cohorts2"),
-    withConceptDetails = TRUE
+    type = "codelist_with_details"
   )
 
   expect_equal(sort(x[[1]]$concept_name), x[[1]]$concept_name)

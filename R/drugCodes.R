@@ -25,15 +25,16 @@
 #' @param doseForm Only descendants codes with the specified dose form
 #' will be returned. If NULL, descendant codes will be returned regardless
 #' of dose form.
-#' @param withConceptDetails If FALSE, each item in the list of results (one per
-#' ATC group) will contain a vector of concept IDs for each ingredient. If
-#' TRUE each item in the list of results will contain a tibble with additional
-#' information on the identified concepts.
+#' @param doseUnit Only descendants codes with the specified dose unit
+#' will be returned. If NULL, descendant codes will be returned regardless
+#' of dose unit
+#' @param routeCategory Only descendants codes with the specified route
+#' will be returned. If NULL, descendant codes will be returned regardless
+#' of dose form.
+#' @param type Can be "codelist", "codelist_with_details", or
+#' "concept_set_expression"
 #'
-#' @return A named list, with each item containing a vector of descendant
-#' concepts of an ATC group (if withConceptDetails was set as FALSE) or a
-#' tibble with the descendant concepts along with additional details about them
-#' (if withConceptDetails was set as TRUE).
+#' @return Concepts with their format based on the type argument.
 #' @export
 #'
 #' @examples
@@ -46,7 +47,15 @@ getATCCodes <- function(cdm,
                         level = c("ATC 1st"),
                         name = NULL,
                         doseForm = NULL,
-                        withConceptDetails = FALSE) {
+                        doseUnit = NULL,
+                        routeCategory = NULL,
+                        type = "codelist") {
+
+
+  if(type == "concept_set_expression"){
+    cli::cli_abort("concept_set_expression not yet supported")
+  }
+
   errorMessage <- checkmate::makeAssertCollection()
   checkDbType(cdm = cdm, type = "cdm_reference", messageStore = errorMessage)
   levelCheck <- all(level %in%
@@ -67,12 +76,13 @@ getATCCodes <- function(cdm,
     add = errorMessage,
     null.ok = TRUE
   )
-  checkmate::assertLogical(withConceptDetails, len = 1)
+  checkmate::assertCharacter(type, len = 1)
   checkmate::reportAssertions(collection = errorMessage)
 
   atc_groups <- cdm$concept %>%
     dplyr::filter(.data$vocabulary_id == "ATC") %>%
     dplyr::filter(.data$concept_class_id %in% .env$level) %>%
+    dplyr::select("concept_id", "concept_name", "concept_code") %>%
     dplyr::collect()
 
   if (!is.null(name)) {
@@ -128,18 +138,20 @@ getATCCodes <- function(cdm,
       drop = TRUE
     )
 
+    names(atc_descendants) <- dplyr::tibble(concept_id = names(atc_descendants)) |>
+      dplyr::mutate(seq = dplyr::row_number()) |>
+      dplyr::left_join(atc_groups |>
+                         dplyr::mutate(concept_id = as.character(.data$concept_id)),
+                       by= "concept_id") |>
+      dplyr::mutate(new_name = paste0(.data$concept_code, "_",
+                                      omopgenerics::toSnakeCase(.data$concept_name))) |>
+      dplyr::arrange(seq) |>
+      dplyr::pull("new_name")
+
+
     # for each item in the list - pull out concepts and name
     for (i in seq_along(atc_descendants)) {
-      workingLevel <- atc_groups %>%
-        dplyr::filter(.data$concept_id == names(atc_descendants)[i]) %>%
-        dplyr::pull("concept_class_id")
-      workingName <- atc_groups %>%
-        dplyr::filter(.data$concept_id == names(atc_descendants)[i]) %>%
-        dplyr::pull("concept_name")
-      workingName <- tidyWords(workingName)
-      workingName <- stringr::str_replace_all(workingName, " ", "_")
-
-      if(isFALSE(withConceptDetails)){
+      if(type == "codelist"){
       atc_descendants[[i]] <- atc_descendants[[i]] %>%
         dplyr::select("concept_id") %>%
         dplyr::distinct() %>%
@@ -149,13 +161,25 @@ getATCCodes <- function(cdm,
         atc_descendants[[i]] <- atc_descendants[[i]] %>%
           dplyr::select(!"ancestor_concept_id")
       }
-
-      names(atc_descendants)[i] <- workingName
     }
   }
 
-  if(isFALSE(withConceptDetails)){
-  atc_descendants <- omopgenerics::newCodelist(atc_descendants)
+  if(type == "codelist"){
+    atc_descendants <- omopgenerics::newCodelist(atc_descendants)
+  } else {
+    atc_descendants <- omopgenerics::newCodelistWithDetails(atc_descendants)
+  }
+
+  if(!is.null(routeCategory)){
+    atc_descendants <- subsetOnRouteCategory(atc_descendants,
+                                             cdm = cdm,
+                                             routeCategory = routeCategory)
+  }
+
+  if(!is.null(doseUnit)){
+    atc_descendants <- subsetOnDoseUnit(atc_descendants,
+                                             cdm = cdm,
+                                             doseUnit = doseUnit)
   }
 
   return(atc_descendants)
@@ -170,46 +194,55 @@ getATCCodes <- function(cdm,
 #' @param doseForm Only descendants codes with the specified dose form
 #' will be returned. If NULL, descendant codes will be returned regardless
 #' of dose form.
+#' @param doseUnit Only descendants codes with the specified dose unit
+#' will be returned. If NULL, descendant codes will be returned regardless
+#' of dose unit
+#' @param routeCategory Only descendants codes with the specified route
+#' will be returned. If NULL, descendant codes will be returned regardless
+#' of route category.
 #' @param ingredientRange Used to restrict descendant codes to those
 #' associated with a specific number of ingredients. Must be a vector of length
 #' two with the first element the minimum number of ingredients allowed and
 #' the second the maximum. A value of c(2, 2) would restrict to only concepts
 #' associated with two ingredients.
-#' @param withConceptDetails If FALSE, each item in the list of results (one per
-#' ingredient) will contain a vector of concept IDs for each ingredient. If
-#' TRUE each item in the list of results will contain a tibble with additional
-#' information on the identified concepts.
+#' @param type Can be "codelist", "codelist_with_details", or
+#' "concept_set_expression"
 #'
-#' @return A named list, with each item containing a vector of descendant
-#' concepts of an ingredient (if withConceptDetails was set as FALSE) or a
-#' tibble with the descendant concepts along with additional details about them
-#' (if withConceptDetails was set as TRUE).
+#' @return Concepts with their format based on the type argument.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#'cdm <- mockVocabRef()
-#'getDrugIngredientCodes(cdm = cdm, name = "Adalimumab")
-#'CDMConnector::cdmDisconnect(cdm)
+#' cdm <- mockVocabRef()
+#' getDrugIngredientCodes(cdm = cdm, name = "Adalimumab")
+#' CDMConnector::cdmDisconnect(cdm)
 #'}
 getDrugIngredientCodes <- function(cdm,
                                    name = NULL,
                                    doseForm = NULL,
+                                   doseUnit = NULL,
+                                   routeCategory = NULL,
                                    ingredientRange = c(1, Inf),
-                                   withConceptDetails = FALSE) {
+                                   type = "codelist") {
+
+
+  if(type == "concept_set_expression"){
+    cli::cli_abort("concept_set_expression not yet supported")
+  }
+
   errorMessage <- checkmate::makeAssertCollection()
   checkDbType(cdm = cdm, type = "cdm_reference", messageStore = errorMessage)
   checkmate::assertVector(name,
     add = errorMessage,
     null.ok = TRUE
   )
-  checkmate::assertLogical(withConceptDetails, len = 1)
+  checkmate::assertCharacter(type, len = 1)
   checkmate::reportAssertions(collection = errorMessage)
 
   ingredientConcepts <- cdm$concept %>%
     dplyr::filter(.data$standard_concept == "S") %>%
     dplyr::filter(.data$concept_class_id == "Ingredient") %>%
-    dplyr::select("concept_id", "concept_name") %>%
+    dplyr::select("concept_id", "concept_name", "concept_code") %>%
     dplyr::collect()
 
   if (!is.null(name)) {
@@ -240,11 +273,11 @@ getDrugIngredientCodes <- function(cdm,
     cli::cli_warn("No descendant codes found")
     return(invisible(list()))
   }
-
       ingredientCodes <- ingredientCodes  %>%
         dplyr::select("concept_id", "concept_name",
-                        "domain_id", "vocabulary_id",
-                        "ancestor_concept_id") %>%
+                      "domain_id", "vocabulary_id",
+                      "standard_concept",
+                      "ancestor_concept_id") %>%
       # split different ancestors into multiple cols
       tidyr::separate_wider_delim(
         cols = "ancestor_concept_id",
@@ -256,7 +289,8 @@ getDrugIngredientCodes <- function(cdm,
     ingredientCodes <- ingredientCodes %>%
       # one row per concept + ancestor
       tidyr::pivot_longer(cols = !c("concept_id", "concept_name",
-                                    "domain_id", "vocabulary_id"),
+                                    "domain_id", "vocabulary_id",
+                                    "standard_concept"),
         names_to = NULL,
         values_to = "ancestor_concept_id",
         values_drop_na = TRUE
@@ -270,16 +304,19 @@ getDrugIngredientCodes <- function(cdm,
       drop = TRUE
     )
 
+    names(ingredientCodes) <- dplyr::tibble(concept_id = names(ingredientCodes)) |>
+    dplyr::mutate(seq = dplyr::row_number()) |>
+      dplyr::left_join(ingredientConcepts |>
+                          dplyr::mutate(concept_id = as.character(.data$concept_id)),
+                       by= "concept_id") |>
+      dplyr::mutate(new_name = paste0(.data$concept_code, "_",
+                                      omopgenerics::toSnakeCase(.data$concept_name))) |>
+      dplyr::arrange(seq) |>
+      dplyr::pull("new_name")
+
     # for each item in the list - pull out concepts and name
     for (i in seq_along(ingredientCodes)) {
-      workingName <- ingredientConcepts %>%
-        dplyr::filter(.data$concept_id == names(ingredientCodes)[[i]]) %>%
-        dplyr::pull("concept_name")
-      workingName <- tidyWords(workingName)
-      workingName <- stringr::str_replace_all(workingName, " ", "_")
-
-
-      if(isFALSE(withConceptDetails)){
+      if(type == "codelist"){
         ingredientCodes[[i]] <- ingredientCodes[[i]] %>%
           dplyr::select("concept_id") %>%
           dplyr::distinct() %>%
@@ -289,12 +326,24 @@ getDrugIngredientCodes <- function(cdm,
         ingredientCodes[[i]] <- ingredientCodes[[i]] %>%
           dplyr::select(!"ancestor_concept_id")
       }
-
-      names(ingredientCodes)[[i]] <- workingName
     }
 
-    if(isFALSE(withConceptDetails)){
+    if(type == "codelist"){
     ingredientCodes <- omopgenerics::newCodelist(ingredientCodes)
+    } else {
+    ingredientCodes <- omopgenerics::newCodelistWithDetails(ingredientCodes)
+    }
+
+    if(!is.null(routeCategory)){
+      ingredientCodes <- subsetOnRouteCategory(ingredientCodes,
+                                               cdm = cdm,
+                                               routeCategory = routeCategory)
+    }
+
+    if(!is.null(doseUnit)){
+      ingredientCodes <- subsetOnDoseUnit(ingredientCodes,
+                                          cdm = cdm,
+                                          doseUnit = doseUnit)
     }
 
     return(ingredientCodes)
@@ -331,3 +380,4 @@ fetchBatchedDescendants <- function(cdm,
 
   return(descendants)
 }
+
