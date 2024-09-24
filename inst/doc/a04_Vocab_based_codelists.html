@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -378,7 +378,7 @@ IDs we could get them with details such as their name and domain.</p>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; ── 1 codelist with details ─────────────────────────────────────────────────────</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; - 161_acetaminophen (5 codes)</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; - 161_acetaminophen (7 codes)</span></span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>acetaminophen_codes_with_details[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> </span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
@@ -403,7 +403,7 @@ one more drug ingredient (i.e. combination therapies) are returned.</p>
 <span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; ── 1 codelist with details ─────────────────────────────────────────────────────</span></span>
 <span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; - 161_acetaminophen (5 codes)</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; - 161_acetaminophen (4 codes)</span></span>
 <span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a></span>
 <span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>acetaminophen_two_or_more_ingredients[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> </span>
 <span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
@@ -427,7 +427,7 @@ acetaminophen and no other drug ingredient.</p>
 <span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; ── 1 codelist with details ─────────────────────────────────────────────────────</span></span>
 <span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; - 161_acetaminophen (5 codes)</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; - 161_acetaminophen (3 codes)</span></span>
 <span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a></span>
 <span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>acetaminophen_one_ingredient[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> </span>
 <span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
@@ -473,17 +473,13 @@ drug ingredient in the vocabularies.</p>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; ── 91 codelists ────────────────────────────────────────────────────────────────</span></span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; - 26225_ondansetron (2 codes)</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; - 6754_meperidine (2 codes)</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; - 28889_loratadine (3 codes)</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; - 7052_morphine (2 codes)</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; - 1191_aspirin (2 codes)</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; - 7258_naproxen (3 codes)</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; - 140587_celecoxib (1 codes)</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; - 3289_dextromethorphan (2 codes)</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; - 3355_diclofenac (1 codes)</span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; - 7804_oxycodone (2 codes)</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; along with 81 more codelists</span></span></code></pre></div>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; - 10318_tacrine (2 codes)</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; - 10582_levothyroxine (2 codes)</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; - 11170_verapamil (2 codes)</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; - 11248_vitamin_b_12 (2 codes)</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; - 11289_warfarin (2 codes)</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; - 11636_drospirenone (2 codes)</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; along with 85 more codelists</span></span></code></pre></div>
 </div>
 <div id="medication-codelists-based-on-atc-classifications" class="section level3">
 <h3>Medication codelists based on ATC classifications</h3>
@@ -491,7 +487,85 @@ drug ingredient in the vocabularies.</p>
 <code>getATCCodes()</code> can be used to generate a codelist based on a
 particular ATC class. To show this, we´ll use a the mock vocabulary from
 CodelistGenerator.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>cdm_mock <span class="ot">&lt;-</span> <span class="fu">mockVocabRef</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>cdm_mock <span class="ot">&lt;-</span> <span class="fu">mockVocabRef</span>()</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; Warning: ! 5 column in person do not match expected column type:</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt; • `person_id` is numeric but expected integer</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; • `gender_concept_id` is numeric but expected integer</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; • `year_of_birth` is numeric but expected integer</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; • `race_concept_id` is numeric but expected integer</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; • `ethnicity_concept_id` is numeric but expected integer</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; Warning: ! 3 column in observation_period do not match expected column type:</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; • `observation_period_id` is numeric but expected integer</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; • `person_id` is numeric but expected integer</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; • `period_type_concept_id` is numeric but expected integer</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; Warning: ! 8 column in cdm_source do not match expected column type:</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; • `cdm_source_abbreviation` is logical but expected character</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; • `cdm_holder` is logical but expected character</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt; • `source_description` is logical but expected character</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt; • `source_documentation_reference` is logical but expected character</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt; • `cdm_etl_reference` is logical but expected character</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; • `source_release_date` is logical but expected date</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt; • `cdm_release_date` is logical but expected date</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt; • `vocabulary_version` is logical but expected character</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co">#&gt; Warning: ! 3 column in concept do not match expected column type:</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="co">#&gt; • `valid_start_date` is logical but expected date</span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="co">#&gt; • `valid_end_date` is logical but expected date</span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">#&gt; • `invalid_reason` is logical but expected character</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a><span class="co">#&gt; Warning: ! 1 column in vocabulary do not match expected column type:</span></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="co">#&gt; • `vocabulary_concept_id` is numeric but expected integer</span></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="co">#&gt; Warning: ! 3 column in concept_relationship do not match expected column type:</span></span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="co">#&gt; • `valid_start_date` is logical but expected date</span></span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a><span class="co">#&gt; • `valid_end_date` is logical but expected date</span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a><span class="co">#&gt; • `invalid_reason` is logical but expected character</span></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a><span class="co">#&gt; Warning: ! 1 column in concept_synonym do not match expected column type:</span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a><span class="co">#&gt; • `language_concept_id` is logical but expected integer</span></span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a><span class="co">#&gt; Warning: ! 2 column in concept_ancestor do not match expected column type:</span></span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a><span class="co">#&gt; • `min_levels_of_separation` is numeric but expected integer</span></span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a><span class="co">#&gt; • `max_levels_of_separation` is numeric but expected integer</span></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="co">#&gt; Warning: ! 7 column in drug_strength do not match expected column type:</span></span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a><span class="co">#&gt; • `amount_value` is logical but expected numeric</span></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a><span class="co">#&gt; • `amount_unit_concept_id` is numeric but expected integer</span></span>
+<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a><span class="co">#&gt; • `numerator_unit_concept_id` is numeric but expected integer</span></span>
+<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a><span class="co">#&gt; • `denominator_unit_concept_id` is numeric but expected integer</span></span>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a><span class="co">#&gt; • `box_size` is logical but expected integer</span></span>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a><span class="co">#&gt; • `valid_start_date` is logical but expected date</span></span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a><span class="co">#&gt; • `valid_end_date` is logical but expected date</span></span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="co">#&gt; Warning: ! 8 column in achilles_analysis do not match expected column type:</span></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="co">#&gt; • `analysis_id` is numeric but expected integer</span></span>
+<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a><span class="co">#&gt; • `analysis_name` is numeric but expected character</span></span>
+<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a><span class="co">#&gt; • `stratum_1_name` is logical but expected character</span></span>
+<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a><span class="co">#&gt; • `stratum_2_name` is logical but expected character</span></span>
+<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a><span class="co">#&gt; • `stratum_3_name` is logical but expected character</span></span>
+<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a><span class="co">#&gt; • `stratum_4_name` is logical but expected character</span></span>
+<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a><span class="co">#&gt; • `stratum_5_name` is logical but expected character</span></span>
+<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a><span class="co">#&gt; • `category` is logical but expected character</span></span>
+<span id="cb8-53"><a href="#cb8-53" tabindex="-1"></a><span class="co">#&gt; Warning: ! 7 column in achilles_results do not match expected column type:</span></span>
+<span id="cb8-54"><a href="#cb8-54" tabindex="-1"></a><span class="co">#&gt; • `analysis_id` is numeric but expected integer</span></span>
+<span id="cb8-55"><a href="#cb8-55" tabindex="-1"></a><span class="co">#&gt; • `stratum_1` is numeric but expected character</span></span>
+<span id="cb8-56"><a href="#cb8-56" tabindex="-1"></a><span class="co">#&gt; • `stratum_2` is logical but expected character</span></span>
+<span id="cb8-57"><a href="#cb8-57" tabindex="-1"></a><span class="co">#&gt; • `stratum_3` is logical but expected character</span></span>
+<span id="cb8-58"><a href="#cb8-58" tabindex="-1"></a><span class="co">#&gt; • `stratum_4` is logical but expected character</span></span>
+<span id="cb8-59"><a href="#cb8-59" tabindex="-1"></a><span class="co">#&gt; • `stratum_5` is logical but expected character</span></span>
+<span id="cb8-60"><a href="#cb8-60" tabindex="-1"></a><span class="co">#&gt; • `count_value` is numeric but expected integer</span></span>
+<span id="cb8-61"><a href="#cb8-61" tabindex="-1"></a><span class="co">#&gt; Warning: ! 16 column in achilles_results_dist do not match expected column type:</span></span>
+<span id="cb8-62"><a href="#cb8-62" tabindex="-1"></a><span class="co">#&gt; • `analysis_id` is numeric but expected integer</span></span>
+<span id="cb8-63"><a href="#cb8-63" tabindex="-1"></a><span class="co">#&gt; • `stratum_1` is logical but expected character</span></span>
+<span id="cb8-64"><a href="#cb8-64" tabindex="-1"></a><span class="co">#&gt; • `stratum_2` is logical but expected character</span></span>
+<span id="cb8-65"><a href="#cb8-65" tabindex="-1"></a><span class="co">#&gt; • `stratum_3` is logical but expected character</span></span>
+<span id="cb8-66"><a href="#cb8-66" tabindex="-1"></a><span class="co">#&gt; • `stratum_4` is logical but expected character</span></span>
+<span id="cb8-67"><a href="#cb8-67" tabindex="-1"></a><span class="co">#&gt; • `stratum_5` is logical but expected character</span></span>
+<span id="cb8-68"><a href="#cb8-68" tabindex="-1"></a><span class="co">#&gt; • `min_value` is logical but expected integer</span></span>
+<span id="cb8-69"><a href="#cb8-69" tabindex="-1"></a><span class="co">#&gt; • `max_value` is logical but expected integer</span></span>
+<span id="cb8-70"><a href="#cb8-70" tabindex="-1"></a><span class="co">#&gt; • `avg_value` is logical but expected numeric</span></span>
+<span id="cb8-71"><a href="#cb8-71" tabindex="-1"></a><span class="co">#&gt; • `stdev_value` is logical but expected numeric</span></span>
+<span id="cb8-72"><a href="#cb8-72" tabindex="-1"></a><span class="co">#&gt; • `median_value` is logical but expected numeric</span></span>
+<span id="cb8-73"><a href="#cb8-73" tabindex="-1"></a><span class="co">#&gt; • `p10_value` is logical but expected numeric</span></span>
+<span id="cb8-74"><a href="#cb8-74" tabindex="-1"></a><span class="co">#&gt; • `p25_value` is logical but expected numeric</span></span>
+<span id="cb8-75"><a href="#cb8-75" tabindex="-1"></a><span class="co">#&gt; • `p75_value` is logical but expected numeric</span></span>
+<span id="cb8-76"><a href="#cb8-76" tabindex="-1"></a><span class="co">#&gt; • `p90_value` is logical but expected numeric</span></span>
+<span id="cb8-77"><a href="#cb8-77" tabindex="-1"></a><span class="co">#&gt; • `count_value` is numeric but expected integer</span></span>
+<span id="cb8-78"><a href="#cb8-78" tabindex="-1"></a><span class="co">#&gt; Warning in validateCdmReference(cdm, soft = .softValidation): There are observation period end dates after the current date: 2024-09-24</span></span>
+<span id="cb8-79"><a href="#cb8-79" tabindex="-1"></a><span class="co">#&gt; ℹ The latest max observation period end date found is 2025-12-31</span></span></code></pre></div>
 <p>In this example, we will produce an ATC level 1 codelist based on
 Alimentary Tract and Metabolism Drugs.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>atc_codelist <span class="ot">&lt;-</span> <span class="fu">getATCCodes</span>(</span>
@@ -540,7 +614,7 @@ details rather than as a codelist.</p>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; ── 1 codelist with details ─────────────────────────────────────────────────────</span></span>
 <span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; - 1234_arthropathies (6 codes)</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; - 1234_arthropathies (3 codes)</span></span>
 <span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a></span>
 <span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>arthropathy_codes[[<span class="dv">1</span>]]</span>
 <span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
