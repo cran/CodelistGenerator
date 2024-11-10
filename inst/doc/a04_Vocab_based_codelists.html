@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -564,7 +564,7 @@ CodelistGenerator.</p>
 <span id="cb8-75"><a href="#cb8-75" tabindex="-1"></a><span class="co">#&gt; • `p75_value` is logical but expected numeric</span></span>
 <span id="cb8-76"><a href="#cb8-76" tabindex="-1"></a><span class="co">#&gt; • `p90_value` is logical but expected numeric</span></span>
 <span id="cb8-77"><a href="#cb8-77" tabindex="-1"></a><span class="co">#&gt; • `count_value` is numeric but expected integer</span></span>
-<span id="cb8-78"><a href="#cb8-78" tabindex="-1"></a><span class="co">#&gt; Warning in validateCdmReference(cdm, soft = .softValidation): There are observation period end dates after the current date: 2024-10-17</span></span>
+<span id="cb8-78"><a href="#cb8-78" tabindex="-1"></a><span class="co">#&gt; Warning in validateCdmReference(cdm, soft = .softValidation): There are observation period end dates after the current date: 2024-11-10</span></span>
 <span id="cb8-79"><a href="#cb8-79" tabindex="-1"></a><span class="co">#&gt; ℹ The latest max observation period end date found is 2025-12-31</span></span></code></pre></div>
 <p>In this example, we will produce an ATC level 1 codelist based on
 Alimentary Tract and Metabolism Drugs.</p>
@@ -596,13 +596,16 @@ arthropathies.</p>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">cdm =</span> cdm_mock,</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">&quot;arthropathies&quot;</span></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>)</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>arthropathy_codes</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; ── 1 codelist ──────────────────────────────────────────────────────────────────</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; - 1234_arthropathies (3 codes)</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>arthropathy_codes<span class="sc">$</span>arthropathies</span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; Getting non-standard ICD10 concepts</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; Mapping from non-standard to standard concepts</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; Getting descendant concepts</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>arthropathy_codes</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; ── 1 codelist ──────────────────────────────────────────────────────────────────</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; - arthropathies (3 codes)</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>arthropathy_codes<span class="sc">$</span>arthropathies</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; [1] 3 4 5</span></span></code></pre></div>
 <p>As with the above functions, we could return concepts with their
 details rather than as a codelist.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>arthropathy_codes <span class="ot">&lt;-</span> <span class="fu">getICD10StandardCodes</span>(</span>
@@ -610,19 +613,22 @@ details rather than as a codelist.</p>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">&quot;arthropathies&quot;</span>, </span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;codelist_with_details&quot;</span></span>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>)</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>arthropathy_codes</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; ── 1 codelist with details ─────────────────────────────────────────────────────</span></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; - 1234_arthropathies (3 codes)</span></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>arthropathy_codes[[<span class="dv">1</span>]]</span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt;   name              concept_id concept_name domain_id vocabulary_id concept_code</span></span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                  &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;       </span></span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; 1 1234_arthropathi…          3 Arthritis    Condition SNOMED        1234        </span></span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt; 2 1234_arthropathi…          4 Osteoarthri… Condition SNOMED        1234        </span></span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt; 3 1234_arthropathi…          5 Osteoarthri… Condition SNOMED        1234</span></span></code></pre></div>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; Getting non-standard ICD10 concepts</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; Mapping from non-standard to standard concepts</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; Getting descendant concepts</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>arthropathy_codes</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; ── 1 codelist with details ─────────────────────────────────────────────────────</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; - 1234_arthropathies (3 codes)</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>arthropathy_codes[[<span class="dv">1</span>]]</span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt;   name              concept_id concept_name domain_id vocabulary_id concept_code</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                  &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;       </span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">#&gt; 1 1234_arthropathi…          3 Arthritis    Condition SNOMED        1234        </span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt; 2 1234_arthropathi…          4 Osteoarthri… Condition SNOMED        1234        </span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="co">#&gt; 3 1234_arthropathi…          5 Osteoarthri… Condition SNOMED        1234</span></span></code></pre></div>
 </div>
 
 

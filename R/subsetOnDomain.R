@@ -14,51 +14,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#' Subset a codelist to only those with a particular dose unit
+#' Subset a codelist to only those codes from a particular domain
 #'
 #' @param x Codelist
 #' @param cdm A cdm reference
-#' @param doseUnit Dose unit. Use getDoseUnit() to find the available
-#' dose units in a cdm
+#' @param domain Domains. Use getDomains() to find the available
+#' domains in a cdm
 #'
 #' @return The codelist with only those concepts associated with the
-#' dose unit
+#' domain
 #' @export
 #'
-subsetOnDoseUnit <- function(x, cdm, doseUnit){
-
-  if(inherits(x, "codelist_with_details")){
-    x_original <- x
-    withDetails <- TRUE
-    x <- codelistFromCodelistWithDetails(x)
-  } else {
-    withDetails <- FALSE
-  }
+subsetOnDomain <- function(x, cdm, domain){
 
   x <- omopgenerics::newCodelist(x)
 
   if(isFALSE(inherits(cdm, "cdm_reference"))){
     cli::cli_abort("cdm must be a cdm reference")
   }
-  if(isFALSE(is.character(doseUnit))){
-    cli::cli_abort("doseUnit must be a character vector")
+  if(isFALSE(is.character(domain))){
+    cli::cli_abort("domain must be a character vector")
   }
 
   tableCodelist <- paste0(omopgenerics::uniqueTableName(),
                           omopgenerics::uniqueId())
-
-
-  drugStrengthNamed <- cdm$drug_strength |>
-    dplyr::left_join(cdm$concept |>
-                       dplyr::select("concept_id",
-                                     "concept_name"),
-                     by= c("amount_unit_concept_id"= "concept_id")) |>
-    dplyr::rename("amount_concept_name" = "concept_name") |>
-    dplyr::left_join(cdm$concept |>
-                        dplyr::select("concept_id",
-                                      "concept_name"),
-                      by= c("numerator_unit_concept_id"= "concept_id")) |>
-    dplyr::rename("numerator_concept_name" = "concept_name")
 
   for(i in seq_along(x)){
     cdm <- omopgenerics::insertTable(cdm = cdm,
@@ -66,32 +45,28 @@ subsetOnDoseUnit <- function(x, cdm, doseUnit){
                                      table = dplyr::tibble(concept_id = x[[i]]),
                                      overwrite = TRUE,
                                      temporary = FALSE)
-
     x[[i]] <- cdm[[tableCodelist]] |>
-      dplyr::inner_join(drugStrengthNamed,
-                        by = c("concept_id" = "drug_concept_id")
-      ) |>
+      dplyr::inner_join(cdm[["concept"]] ,
+                        by = "concept_id") |>
       dplyr::select("concept_id",
-                    "amount_concept_name",
-                    "numerator_concept_name") |>
+                    "domain_id") |>
       dplyr::distinct() |>
       dplyr::collect()
 
     x[[i]] <- x[[i]] |>
-      dplyr::filter(tolower(.data$amount_concept_name) %in% tolower(.env$doseUnit) |
-                    tolower(.data$numerator_concept_name) %in% tolower(.env$doseUnit)) |>
+      dplyr::filter(tolower(.data$domain_id) %in% tolower(.env$domain)) |>
       dplyr::pull("concept_id")
 
     x[[i]] <- sort(unique(x[[i]]))
 
-    if(isTRUE(withDetails)){
-      x[[i]] <- x_original[[i]] |>
-        dplyr::filter(.data$concept_id %in% x[[i]])
-    }
   }
 
   x <- x |>
     vctrs::list_drop_empty()
+
+  if(length(x) == 0){
+    x <- omopgenerics::emptyCodelist()
+  }
 
   CDMConnector::dropTable(cdm = cdm, name = tableCodelist)
 
