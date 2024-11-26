@@ -384,21 +384,21 @@ high-level code and include all its descendants.</p>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    vocabularyDatabaseSchema,</span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="st">&quot;.concept_ancestor&quot;</span></span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  ))</span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">filter</span>(ancestor_concept_id <span class="sc">==</span> <span class="st">&quot;4182210&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;descendant_concept_id&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;concept_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;descendant_concept_id&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">filter</span>(ancestor_concept_id <span class="sc">==</span> <span class="st">&quot;4182210&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">&quot;descendant_concept_id&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">&quot;concept_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;descendant_concept_id&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">tbl</span>(db, <span class="fu">sql</span>(<span class="fu">paste0</span>(</span>
 <span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>    <span class="st">&quot;SELECT * FROM &quot;</span>,</span>
 <span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    vocabularyDatabaseSchema,</span>
 <span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>    <span class="st">&quot;.concept&quot;</span></span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>  )))) <span class="sc">%&gt;%</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>  )))) <span class="sc">|&gt;</span></span>
 <span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>  <span class="fu">select</span>(</span>
 <span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>    <span class="st">&quot;concept_id&quot;</span>, <span class="st">&quot;concept_name&quot;</span>,</span>
 <span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>    <span class="st">&quot;domain_id&quot;</span>, <span class="st">&quot;vocabulary_id&quot;</span></span>
-<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>  <span class="fu">collect</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>codesFromDescendants <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>codesFromDescendants <span class="sc">|&gt;</span> </span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; Rows: 151</span></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; Columns: 4</span></span>
@@ -424,7 +424,7 @@ including descendants of the identified codes.</p>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="at">domains =</span> <span class="st">&quot;Condition&quot;</span>,</span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="at">includeDescendants =</span> <span class="cn">TRUE</span></span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>dementiaCodes1<span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>dementiaCodes1<span class="sc">|&gt;</span> </span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; Rows: 187</span></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; Columns: 6</span></span>
@@ -443,8 +443,8 @@ including descendants of the identified codes.</p>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  codesFromDescendants,</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  dementiaCodes1</span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>codeComparison <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">group_by</span>(codelist) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>codeComparison <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">group_by</span>(codelist) <span class="sc">|&gt;</span></span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt;   codelist            n</span></span>
@@ -452,8 +452,8 @@ including descendants of the identified codes.</p>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; 1 Both              151</span></span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; 2 Only codelist 2    36</span></span></code></pre></div>
 <p>What are these extra codes picked up by CodelistGenerator?</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>codeComparison <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">filter</span>(codelist <span class="sc">==</span> <span class="st">&quot;Only codelist 2&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>codeComparison <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">filter</span>(codelist <span class="sc">==</span> <span class="st">&quot;Only codelist 2&quot;</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; Rows: 36</span></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; Columns: 3</span></span>
@@ -470,7 +470,7 @@ list. We can get these by running</p>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">candidateCodelist =</span> dementiaCodes1,</span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">nonStandardVocabularies =</span> <span class="st">&quot;ICD10CM&quot;</span></span>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>icdMappings <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>icdMappings <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; Rows: 191</span></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; Columns: 7</span></span>
@@ -486,7 +486,7 @@ list. We can get these by running</p>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="at">candidateCodelist =</span> dementiaCodes1,</span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="at">nonStandardVocabularies =</span> <span class="st">&quot;Read&quot;</span></span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>readMappings <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>readMappings <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; Rows: 93</span></span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; Columns: 7</span></span>

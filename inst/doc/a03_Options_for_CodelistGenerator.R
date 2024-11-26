@@ -27,7 +27,7 @@ codes <- getCandidateCodes(
   includeDescendants = FALSE,
 )
 
-codes %>% 
+codes |> 
   glimpse()
 
 ## -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ codes <- getCandidateCodes(
   includeDescendants = FALSE
 )
 
-codes %>% 
+codes |> 
   glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -50,7 +50,7 @@ getCandidateCodes(
   keywords = "Musculoskeletal disorder",
   domains = "Condition",
   includeDescendants = TRUE
-) %>% 
+) |> 
   glimpse()
 
 ## -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ codes <- getCandidateCodes(
   includeDescendants = FALSE
 )
 
-codes %>% 
+codes |> 
   glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -79,7 +79,7 @@ codes <- getCandidateCodes(
   domains = "Condition"
 )
 
-codes %>% 
+codes |> 
   glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -93,7 +93,7 @@ codes <- getCandidateCodes(
   includeDescendants = TRUE
 )
 
-codes %>% 
+codes |> 
   glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -107,7 +107,7 @@ codes <- getCandidateCodes(
   domains = "Condition"
 )
 
-codes %>% 
+codes |> 
   glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -121,7 +121,7 @@ codes <- getCandidateCodes(
   searchInSynonyms = TRUE
 )
 
-codes %>% 
+codes |> 
   glimpse()
 
 ## -----------------------------------------------------------------------------
@@ -132,7 +132,7 @@ codes <- getCandidateCodes(
   searchNonStandard = TRUE
 )
 
-codes %>% 
+codes |> 
   glimpse()
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -151,6 +151,6 @@ codes <- getCandidateCodes(
   standardConcept = c("Standard", "Non-standard")
 )
 
-codes %>% 
+codes |> 
   glimpse()
 

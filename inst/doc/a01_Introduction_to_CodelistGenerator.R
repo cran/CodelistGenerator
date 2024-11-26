@@ -42,19 +42,19 @@ vocabVersion
 #      vocabularyDatabaseSchema,
 #      ".concept_ancestor"
 #    ))
-#  ) %>%
-#    filter(ancestor_concept_id == "4182210") %>%
-#    select("descendant_concept_id") %>%
-#    rename("concept_id" = "descendant_concept_id") %>%
+#  ) |>
+#    filter(ancestor_concept_id == "4182210") |>
+#    select("descendant_concept_id") |>
+#    rename("concept_id" = "descendant_concept_id") |>
 #    left_join(tbl(db, sql(paste0(
 #      "SELECT * FROM ",
 #      vocabularyDatabaseSchema,
 #      ".concept"
-#    )))) %>%
+#    )))) |>
 #    select(
 #      "concept_id", "concept_name",
 #      "domain_id", "vocabulary_id"
-#    ) %>%
+#    ) |>
 #    collect()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
@@ -62,7 +62,7 @@ codesFromDescendants <- readRDS(system.file("introData01.RData",
                                             package = "CodelistGenerator"))
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-codesFromDescendants %>% 
+codesFromDescendants |> 
   glimpse()
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -78,7 +78,7 @@ dementiaCodes1 <- readRDS(system.file("introData02.RData",
                                             package = "CodelistGenerator"))
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-dementiaCodes1%>% 
+dementiaCodes1|> 
   glimpse()
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -92,13 +92,13 @@ codeComparison <- readRDS(system.file("introData03.RData",
                                             package = "CodelistGenerator"))
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-codeComparison %>%
-  group_by(codelist) %>%
+codeComparison |>
+  group_by(codelist) |>
   tally()
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-codeComparison %>%
-  filter(codelist == "Only codelist 2") %>% 
+codeComparison |>
+  filter(codelist == "Only codelist 2") |> 
   glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
@@ -113,7 +113,7 @@ icdMappings <- readRDS(system.file("introData04.RData",
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-icdMappings %>% 
+icdMappings |> 
   glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
@@ -128,6 +128,6 @@ readMappings <- readRDS(system.file("introData05.RData",
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-readMappings %>% 
+readMappings |> 
   glimpse()
 

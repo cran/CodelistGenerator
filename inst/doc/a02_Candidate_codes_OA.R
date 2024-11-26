@@ -59,7 +59,7 @@ oaCodes1 <- readRDS(system.file("optionsData01.RData",
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-oaCodes1 %>% 
+oaCodes1 |> 
   glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
@@ -82,11 +82,11 @@ oaCodes2 <- readRDS(system.file("optionsData02.RData",
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-newCodes1To2 <- compareCodelists(oaCodes1, oaCodes2) %>%
-  filter(codelist == "Only codelist 2") %>%
+newCodes1To2 <- compareCodelists(oaCodes1, oaCodes2) |>
+  filter(codelist == "Only codelist 2") |>
   select(-"codelist")
 
-newCodes1To2 %>% 
+newCodes1To2 |> 
   glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
@@ -109,11 +109,11 @@ oaCodes3 <- readRDS(system.file("optionsData03.RData",
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-newCodes1To3 <- compareCodelists(oaCodes1, oaCodes3) %>%
-  filter(codelist == "Only codelist 2") %>%
+newCodes1To3 <- compareCodelists(oaCodes1, oaCodes3) |>
+  filter(codelist == "Only codelist 2") |>
   select(-"codelist")
 
-newCodes1To3 %>% 
+newCodes1To3 |> 
   glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
@@ -136,11 +136,11 @@ oaCodes4 <- readRDS(system.file("optionsData04.RData",
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-newCodes1To4 <- compareCodelists(oaCodes1, oaCodes4) %>%
-  filter(codelist == "Only codelist 2") %>%
+newCodes1To4 <- compareCodelists(oaCodes1, oaCodes4) |>
+  filter(codelist == "Only codelist 2") |>
   select(-"codelist")
 
-newCodes1To4 %>% 
+newCodes1To4 |> 
   glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
@@ -163,11 +163,11 @@ oaCodes5 <- readRDS(system.file("optionsData05.RData",
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-newCodes1To5 <- compareCodelists(oaCodes1, oaCodes5) %>%
-  filter(codelist == "Only codelist 2") %>%
+newCodes1To5 <- compareCodelists(oaCodes1, oaCodes5) |>
+  filter(codelist == "Only codelist 2") |>
   select(-"codelist")
 
-newCodes1To5 %>% 
+newCodes1To5 |> 
   glimpse()
 
 ## ----message=FALSE, warning=FALSE,echo=FALSE----------------------------------
@@ -190,10 +190,10 @@ oaCodes8 <- readRDS(system.file("optionsData07.RData",
 #  )
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-newCodes1To8 <- compareCodelists(oaCodes1, oaCodes8) %>%
-  filter(codelist == "Only codelist 2") %>%
+newCodes1To8 <- compareCodelists(oaCodes1, oaCodes8) |>
+  filter(codelist == "Only codelist 2") |>
   select(-"codelist")
 
-newCodes1To8 %>% 
+newCodes1To8 |> 
   glimpse()
 
