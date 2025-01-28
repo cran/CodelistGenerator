@@ -360,9 +360,9 @@ vocabularies tables of the OMOP CDM using the CDMConnector package.</p>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>)</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># create cdm reference</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> CDMConnector<span class="sc">::</span><span class="fu">cdm_from_con</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> CDMConnector<span class="sc">::</span><span class="fu">cdmFromCon</span>(</span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="at">con =</span> db,</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="at">cdm_schema =</span> <span class="fu">Sys.getenv</span>(<span class="st">&quot;vocabulary_schema&quot;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="at">cdmSchema =</span> <span class="fu">Sys.getenv</span>(<span class="st">&quot;vocabulary_schema&quot;</span>)</span>
 <span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="check-version-of-the-vocabularies" class="section level2">
