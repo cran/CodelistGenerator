@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -377,10 +377,11 @@ strategies.</p>
 <div id="condition-domain-without-searching-synonyms-with-exclusions-without-including-descendants-or-ancestor" class="section level3">
 <h3>Condition domain, without searching synonyms, with exclusions,
 without including descendants or ancestor</h3>
-<p>To start we will search for “osteoarthritis”, while excluding
-“post-infection” and “post-traumatic”, but without searching synonyms,
-without searching via non-standard codes, and without including
-descendants or the direct ancestor of the included concepts.</p>
+<p>To start, we will search for “osteoarthritis” within the “Condition”,
+while excluding “post-infection” and “post-traumatic”, but without
+searching synonyms, without searching via non-standard codes, and
+without including descendants or the direct ancestor of the included
+concepts.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>oaCodes1 <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">keywords =</span> <span class="st">&quot;osteoarthritis&quot;</span>,</span>
@@ -434,14 +435,14 @@ descendants or the direct ancestor of the included concepts.</p>
 <span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; $ concept_id   &lt;int&gt; 72401, 72405, 72709, 72990, 73287, 73550, 73554, 74132, 7…</span></span>
 <span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; $ concept_name &lt;chr&gt; &quot;Kashin-Bek disease&quot;, &quot;Degenerative joint disease of shou…</span></span></code></pre></div>
 </div>
-<div id="including-observation-domain" class="section level3">
-<h3>Including observation domain</h3>
-<p>Now we will search the observation domain as well as the condition
-domain.</p>
+<div id="including-all-domains" class="section level3">
+<h3>Including all domains</h3>
+<p>Now we will search in all the supported domains, that means:
+Condition, Drug, Procedure, Device, Observation, and Measurement.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>oaCodes3 <span class="ot">&lt;-</span> <span class="fu">getCandidateCodes</span>(</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="at">cdm =</span> cdm,</span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">keywords =</span> <span class="st">&quot;osteoarthritis&quot;</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">domains =</span> <span class="fu">c</span>(<span class="st">&quot;Condition&quot;</span>, <span class="st">&quot;Observation&quot;</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">domains =</span> <span class="cn">NULL</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="at">searchInSynonyms =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="at">searchNonStandard =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="at">exclude =</span> <span class="fu">c</span>(</span>

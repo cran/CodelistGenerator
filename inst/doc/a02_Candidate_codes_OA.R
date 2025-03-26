@@ -97,7 +97,7 @@ oaCodes3 <- readRDS(system.file("optionsData03.RData",
 # oaCodes3 <- getCandidateCodes(
 #   cdm = cdm,
 #   keywords = "osteoarthritis",
-#   domains = c("Condition", "Observation"),
+#   domains = NULL,
 #   searchInSynonyms = FALSE,
 #   searchNonStandard = FALSE,
 #   exclude = c(
