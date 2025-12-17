@@ -48,6 +48,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -353,7 +354,7 @@ database.</p>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># Connect to the database and create the cdm object</span></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), </span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>                      <span class="fu">eunomiaDir</span>(<span class="st">&quot;synpuf-1k&quot;</span>, <span class="st">&quot;5.3&quot;</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>                 <span class="fu">eunomiaDir</span>(<span class="st">&quot;synpuf-1k&quot;</span>, <span class="st">&quot;5.3&quot;</span>))</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">cdmFromCon</span>(<span class="at">con =</span> con, </span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>                  <span class="at">cdmName =</span> <span class="st">&quot;Eunomia Synpuf&quot;</span>,</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>                  <span class="at">cdmSchema   =</span> <span class="st">&quot;main&quot;</span>,</span>
@@ -365,58 +366,43 @@ reference, which are used for some of the analyses.</p>
 <h2>Vocabulary characteristics</h2>
 <p>We can first start by getting the vocabulary version of our CDM
 object:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">getVocabVersion</span>(cdm)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">vocabularyVersion</span>(cdm)</span></code></pre></div>
 <p>And the available vocabularies, which correspond to the column
 <em>vocabulary_id</em> from the concept table:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">getVocabularies</span>(cdm)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">availableVocabularies</span>(cdm)</span></code></pre></div>
 </div>
 <div id="domains" class="section level2">
 <h2>Domains</h2>
 <p>We can also explore the domains that our CDM object has, which is the
 column <em>domain_id</em> from the concept table:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">getDomains</span>(cdm)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">availableDomains</span>(cdm)</span></code></pre></div>
 <p>or restrict the search among <em>standard</em> concepts:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">getDomains</span>(cdm, </span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>           <span class="at">standardConcept =</span> <span class="st">&quot;Standard&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">availableDomains</span>(cdm,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                 <span class="at">standardConcept =</span> <span class="st">&quot;Standard&quot;</span>)</span></code></pre></div>
 </div>
 <div id="concept-class" class="section level2">
 <h2>Concept class</h2>
 <p>We can further explore the different classes that we have (reported
 in <em>concept_class_id</em> column from the concept table):</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">getConceptClassId</span>(cdm)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">availableConceptClassIds</span>(cdm)</span></code></pre></div>
 <p>Or restrict the search among <em>non-standard</em> concepts with
 <em>condition</em> domain:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">getConceptClassId</span>(cdm, </span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>                  <span class="at">standardConcept =</span> <span class="st">&quot;Non-standard&quot;</span>, </span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                  <span class="at">domain =</span> <span class="st">&quot;Condition&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">availableConceptClassIds</span>(cdm, </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>                         <span class="at">standardConcept =</span> <span class="st">&quot;Non-standard&quot;</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                         <span class="at">domain =</span> <span class="st">&quot;Condition&quot;</span>)</span></code></pre></div>
 </div>
 <div id="relationships" class="section level2">
 <h2>Relationships</h2>
 <p>We can also explore the different relationships that are present in
 our CDM:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">getRelationshipId</span>(cdm)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">availableRelationshipIds</span>(cdm)</span></code></pre></div>
 <p>Or narrow the search among <em>standard</em> concepts with domain
 <em>observation</em>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">getRelationshipId</span>(cdm,</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>                  <span class="at">standardConcept1 =</span> <span class="st">&quot;standard&quot;</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                  <span class="at">standardConcept2 =</span> <span class="st">&quot;standard&quot;</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>                  <span class="at">domains1 =</span> <span class="st">&quot;observation&quot;</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>                  <span class="at">domains2 =</span> <span class="st">&quot;observation&quot;</span>)</span></code></pre></div>
-</div>
-<div id="codes-in-use" class="section level2">
-<h2>Codes in use</h2>
-<p>Finally, we can easily get those codes that are in use (that means,
-that are recorded at least one time in the database):</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">sourceCodesInUse</span>(cdm)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">head</span>(result, <span class="at">n =</span> <span class="dv">5</span>) <span class="co"># Only the first 5 will be shown</span></span></code></pre></div>
-<p>Notice that <a href="https://github.com/OHDSI/Achilles">achilles
-tables</a> are used in this function. If you CDM does not have them
-loaded, an empty result will be returned.</p>
-<p>And we can restrict the search within specific CDM tables (for
-example, <em>condition_occurrence</em> and <em>device_exposure</em>
-table):</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">sourceCodesInUse</span>(cdm, <span class="at">table =</span> <span class="fu">c</span>(<span class="st">&quot;device_exposure&quot;</span>, <span class="st">&quot;condition_occurrence&quot;</span>))</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">head</span>(result, <span class="at">n =</span> <span class="dv">5</span>) <span class="co"># Only the first 5 will be shown</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">availableRelationshipIds</span>(cdm,</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>                         <span class="at">standardConcept1 =</span> <span class="st">&quot;Standard&quot;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                         <span class="at">standardConcept2 =</span> <span class="st">&quot;Standard&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>                         <span class="at">domains1 =</span> <span class="st">&quot;Observation&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>                         <span class="at">domains2 =</span> <span class="st">&quot;Observation&quot;</span>)</span></code></pre></div>
 </div>
 
 

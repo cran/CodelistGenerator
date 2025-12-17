@@ -48,6 +48,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -384,8 +385,8 @@ vocabulary version used when this OMOP CDM database was created.
 Moreover, we should also take note of which vocabularies were included.
 A couple of CodelistGenerator utility functions can help us find this
 information.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">getVocabVersion</span>(cdm)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">getVocabularies</span>(cdm)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">vocabularyVersion</span>(cdm)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">availableVocabularies</span>(cdm)</span></code></pre></div>
 </div>
 <div id="create-a-local-vocabulary-database" class="section level2">
 <h2>Create a local vocabulary database</h2>
@@ -395,12 +396,12 @@ can create your own vocabulary database.</p>
 <div id="download-vocabularies-from-athena" class="section level3">
 <h3>Download vocabularies from athena</h3>
 <p>Your first step will be to get the vocabulary tables for the OMOP
-CDM. For this go to <a href="https://athena.ohdsi.org/" class="uri">https://athena.ohdsi.org/</a>. From here you can, after
-creating a free account, download the vocabularies. By default you will
-be getting the latest version and a default set of vocabularies. You can
-though choose to download an older version and expand your selection of
-vocabularies. In general we would suggest to select all available
-vocabularies.</p>
+CDM. For this go to the OHDSI ATHENA website (athena.ohdsi.org). From
+here you can, after creating a free account, download the vocabularies.
+By default you will be getting the latest version and a default set of
+vocabularies. You can though choose to download an older version and
+expand your selection of vocabularies. In general we would suggest to
+select all available vocabularies.</p>
 </div>
 <div id="create-a-duckdb-database" class="section level3">
 <h3>Create a duckdb database</h3>
@@ -415,47 +416,48 @@ so that you can create a cdm reference at the end.</p>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">library</span>(omopgenerics)</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>vocab_folder <span class="ot">&lt;-</span> <span class="fu">here</span>() <span class="co"># add path to directory</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co"># read in files</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>concept <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;CONCEPT.csv&quot;</span>),</span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>                      <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>                      <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>)</span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>concept_relationship <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;CONCEPT_RELATIONSHIP.csv&quot;</span>),</span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>                                   <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>                                   <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>)</span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>concept_ancestor <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;CONCEPT_ANCESTOR.csv&quot;</span>),</span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>                               <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
-<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>                               <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>)</span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>concept_synonym <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;CONCEPT_SYNONYM.csv&quot;</span>),</span>
-<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>                              <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
-<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>                              <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>)</span>
-<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>vocabulary <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;VOCABULARY.csv&quot;</span>), <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
-<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>                         <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
-<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>)</span>
-<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a></span>
-<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co"># write to duckdb</span></span>
-<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">duckdb</span>(), <span class="fu">here</span>(vocab_folder,<span class="st">&quot;vocab.duckdb&quot;</span>))</span>
-<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;concept&quot;</span>, concept, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;concept_relationship&quot;</span>, concept_relationship, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;concept_ancestor&quot;</span>, concept_ancestor, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;concept_synonym&quot;</span>, concept_synonym, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;vocabulary&quot;</span>, vocabulary, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a><span class="co"># add empty person and observation period tables</span></span>
-<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a>person_cols <span class="ot">&lt;-</span> <span class="fu">omopColumns</span>(<span class="st">&quot;person&quot;</span>)</span>
-<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a>person <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="fu">length</span>(person_cols), <span class="at">nrow =</span> <span class="dv">0</span>))</span>
-<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a><span class="fu">colnames</span>(person) <span class="ot">&lt;-</span> person_cols</span>
-<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;person&quot;</span>, person, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a>observation_period_cols <span class="ot">&lt;-</span> <span class="fu">omopColumns</span>(<span class="st">&quot;observation_period&quot;</span>)</span>
-<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a>observation_period <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="fu">length</span>(observation_period_cols), <span class="at">nrow =</span> <span class="dv">0</span>))</span>
-<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a><span class="fu">colnames</span>(observation_period) <span class="ot">&lt;-</span> observation_period_cols</span>
-<span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;observation_period&quot;</span>, observation_period, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a><span class="fu">dbDisconnect</span>(db)</span></code></pre></div>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>vocab_folder <span class="ot">&lt;-</span> <span class="fu">here</span>() <span class="co"># add path to directory</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># read in files</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>concept <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;CONCEPT.csv&quot;</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>                      <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>                      <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>)</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>concept_relationship <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;CONCEPT_RELATIONSHIP.csv&quot;</span>),</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>                                   <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>                                   <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>)</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>concept_ancestor <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;CONCEPT_ANCESTOR.csv&quot;</span>),</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>                               <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>                               <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>)</span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>concept_synonym <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;CONCEPT_SYNONYM.csv&quot;</span>),</span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>                              <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>                              <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>)</span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>vocabulary <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(vocab_folder, <span class="st">&quot;VOCABULARY.csv&quot;</span>), <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,</span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>                         <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>)</span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co"># write to duckdb</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">duckdb</span>(), <span class="fu">here</span>(vocab_folder,<span class="st">&quot;vocab.duckdb&quot;</span>))</span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;concept&quot;</span>, concept, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;concept_relationship&quot;</span>, concept_relationship, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;concept_ancestor&quot;</span>, concept_ancestor, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;concept_synonym&quot;</span>, concept_synonym, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;vocabulary&quot;</span>, vocabulary, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a><span class="co"># add empty person and observation period tables</span></span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a>person_cols <span class="ot">&lt;-</span> <span class="fu">omopColumns</span>(<span class="st">&quot;person&quot;</span>)</span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a>person <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="fu">length</span>(person_cols), <span class="at">nrow =</span> <span class="dv">0</span>))</span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a><span class="fu">colnames</span>(person) <span class="ot">&lt;-</span> person_cols</span>
+<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;person&quot;</span>, person, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a>observation_period_cols <span class="ot">&lt;-</span> <span class="fu">omopColumns</span>(<span class="st">&quot;observation_period&quot;</span>)</span>
+<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a>observation_period <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="fu">length</span>(observation_period_cols), <span class="at">nrow =</span> <span class="dv">0</span>))</span>
+<span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a><span class="fu">colnames</span>(observation_period) <span class="ot">&lt;-</span> observation_period_cols</span>
+<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a><span class="fu">dbWriteTable</span>(db, <span class="st">&quot;observation_period&quot;</span>, observation_period, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a><span class="fu">dbDisconnect</span>(db)</span></code></pre></div>
 <p>Now we could create a cdm reference to our OMOP CDM vocabulary
 database.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>db <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">duckdb</span>(), <span class="fu">here</span>(vocab_folder,<span class="st">&quot;vocab.duckdb&quot;</span>))</span>
