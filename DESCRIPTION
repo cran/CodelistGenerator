@@ -1,6 +1,6 @@
 Package: CodelistGenerator
 Title: Identify Relevant Clinical Codes and Evaluate Their Use
-Version: 4.0.0
+Version: 4.0.1
 Authors@R: c(
     person("Edward", "Burn", email = "edward.burn@ndorms.ox.ac.uk", 
     role = c("aut", "cre"),
@@ -43,7 +43,7 @@ URL: https://darwin-eu.github.io/CodelistGenerator/
 Language: en-US
 LazyData: true
 NeedsCompilation: no
-Packaged: 2025-12-17 15:03:58 UTC; orms0426
+Packaged: 2026-01-07 09:47:01 UTC; orms0426
 Author: Edward Burn [aut, cre] (ORCID: <https://orcid.org/0000-0002-9286-1128>),
   Marta Alcalde-Herraiz [aut] (ORCID:
     <https://orcid.org/0009-0002-4405-1814>),
@@ -55,4 +55,4 @@ Author: Edward Burn [aut, cre] (ORCID: <https://orcid.org/0000-0002-9286-1128>),
   Danielle Newby [aut] (ORCID: <https://orcid.org/0000-0002-3001-1478>)
 Maintainer: Edward Burn <edward.burn@ndorms.ox.ac.uk>
 Repository: CRAN
-Date/Publication: 2025-12-17 16:00:02 UTC
+Date/Publication: 2026-01-08 06:12:06 UTC

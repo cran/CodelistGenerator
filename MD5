@@ -1,6 +1,6 @@
-50bb59327ac0a69f5768215a5da1f807 *DESCRIPTION
+ee5ef962caeba11c97418288117cf699 *DESCRIPTION
 05c957d27f7b39344ce73a8f6ca674e4 *NAMESPACE
-162bba2f15fa7e74a568cce311d68925 *NEWS.md
+6aab0e9ad936d418e8aaf319e36cce90 *NEWS.md
 be405f3a7eba3bd151edb4198ab3d802 *R/CodelistGenerator-package.R
 4354200f16a6e7cf0de772a1dfd5c6af *R/addConcepts.R
 4e9a6081c915840f2b6a1d1cf15e0559 *R/asCodelist.R
@@ -15,7 +15,7 @@ a3b6d3e01ac80fbf9ddaf8722c292b33 *R/availableDrugIngredients.R
 8de17819b36350e4fb697a6b9eb12647 *R/availableRelationshipIds.R
 f8fe7f850b84a1a9e0a0a1543616ad5c *R/availableRouteCategories.R
 c4b5961a1befe46235f6514b8a6fa0e3 *R/availableVocabularies.R
-1a3d35eae2d06eae48373ab43cea7135 *R/benchmarkCodelistGenerator.R
+62ef584cd08810d53a05bd9beb297747 *R/benchmarkCodelistGenerator.R
 7d38a52a15af60ab48257ec1d73d9714 *R/buildAchillesTables.R
 1532bca92dad7da5fcd5cbc5a42823da *R/checks.R
 7c0aeedc709fd110fe042b4987627719 *R/codesFromConceptSet.R
@@ -32,7 +32,7 @@ a206cf5174168131ed6c45d11d8479b2 *R/getMappings.R
 4f9b89afefde5fe1446051ed969988fd *R/intersectCodelists.R
 de7802869eb92b5a88f2bc974d2e6808 *R/mockVocabRef.R
 723bd1fce516e16bda3754ebfe68e473 *R/reexports.R
-88e6cd5bfce8982e2ad388fa84b19e81 *R/runSearch.R
+d884779b97494f8801007762588f18d4 *R/runSearch.R
 8463aa904e83db8d054df0725dea17ac *R/searchStrategy.R
 e68715f8b54f798f57948daea73241c3 *R/stratify.R
 020baf6b4c5c9b2ee9ef7082f7c3ccbc *R/stratifyByBrand.R
@@ -51,7 +51,7 @@ a686f1d6c74ba20488860eea036e0a84 *R/subsetOnIngredientRange.R
 f4299187986d9b9d065ad3b256f7985a *R/subsetOnVocabulary.R
 c82631e9256ce4640943d5d8447889c4 *R/subsetToCodesInUse.R
 2ad2ee07c2a01fec28bbfa2b8ad348ff *R/summariseAchillesCodeUse.R
-25b8fd703e2e2d5105000ef7cc6ca9ab *R/summariseCodeUse.R
+4791e0ed1c2a12bd209106bd6b640d2f *R/summariseCodeUse.R
 ad1c656699e66ab5d21ec8fa059b0799 *R/summariseOrphanCodes.R
 105155b46d1c20015baa42d5e860cd43 *R/sysdata.rda
 b6bc106fca02d74ec85ba9f1164c91b3 *R/tableAchillesCodeUse.R
@@ -108,7 +108,7 @@ d4776dc18c893f133b9f149ba417bda9 *inst/doc/a06_ImportExport.html
 e32c74a2685dbc0ef90616ec65b633f3 *inst/doc/a09_RunCodelistDiagnostics.html
 93c18a3b4767b2690b2b0e007c89d5b5 *inst/doc/a10_CodelistGeneratorBenchmark.R
 8afd1cf98739316fb562a2f223981329 *inst/doc/a10_CodelistGeneratorBenchmark.Rmd
-31aa527f62ebdc6d1d0db5280d05c424 *inst/doc/a10_CodelistGeneratorBenchmark.html
+9dbac61fd58b2aaa257ad995a0ef8a5a *inst/doc/a10_CodelistGeneratorBenchmark.html
 1fa477464797a6309614e653fe1d05e1 *man/CodelistGenerator-package.Rd
 bc5350a09037be03ebd9f24ad4662eb3 *man/addConcepts.Rd
 2854aaabb8df8ba694e19429cc3f5f84 *man/ageGroupDoc.Rd
