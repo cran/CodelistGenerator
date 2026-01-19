@@ -1,4 +1,4 @@
-ee5ef962caeba11c97418288117cf699 *DESCRIPTION
+7a13d697d77a8c6cf1ead91b013bd0d8 *DESCRIPTION
 05c957d27f7b39344ce73a8f6ca674e4 *NAMESPACE
 6aab0e9ad936d418e8aaf319e36cce90 *NEWS.md
 be405f3a7eba3bd151edb4198ab3d802 *R/CodelistGenerator-package.R
@@ -51,7 +51,7 @@ a686f1d6c74ba20488860eea036e0a84 *R/subsetOnIngredientRange.R
 f4299187986d9b9d065ad3b256f7985a *R/subsetOnVocabulary.R
 c82631e9256ce4640943d5d8447889c4 *R/subsetToCodesInUse.R
 2ad2ee07c2a01fec28bbfa2b8ad348ff *R/summariseAchillesCodeUse.R
-4791e0ed1c2a12bd209106bd6b640d2f *R/summariseCodeUse.R
+3bb5fae646bd438c45530798ce38c603 *R/summariseCodeUse.R
 ad1c656699e66ab5d21ec8fa059b0799 *R/summariseOrphanCodes.R
 105155b46d1c20015baa42d5e860cd43 *R/sysdata.rda
 b6bc106fca02d74ec85ba9f1164c91b3 *R/tableAchillesCodeUse.R
@@ -108,7 +108,7 @@ d4776dc18c893f133b9f149ba417bda9 *inst/doc/a06_ImportExport.html
 e32c74a2685dbc0ef90616ec65b633f3 *inst/doc/a09_RunCodelistDiagnostics.html
 93c18a3b4767b2690b2b0e007c89d5b5 *inst/doc/a10_CodelistGeneratorBenchmark.R
 8afd1cf98739316fb562a2f223981329 *inst/doc/a10_CodelistGeneratorBenchmark.Rmd
-9dbac61fd58b2aaa257ad995a0ef8a5a *inst/doc/a10_CodelistGeneratorBenchmark.html
+cff875ff0125691fec2db9aec15ebd72 *inst/doc/a10_CodelistGeneratorBenchmark.html
 1fa477464797a6309614e653fe1d05e1 *man/CodelistGenerator-package.Rd
 bc5350a09037be03ebd9f24ad4662eb3 *man/addConcepts.Rd
 2854aaabb8df8ba694e19429cc3f5f84 *man/ageGroupDoc.Rd
@@ -248,7 +248,7 @@ fd89f627360cbe34803dfd328187c73d *tests/testthat/test-subsetOnRouteCategory.R
 88f927bae704e5aa9934b490cf410b98 *tests/testthat/test-subsetOnVocabulary.R
 60946d3cb33e1ca5412606df5fcd3877 *tests/testthat/test-subsetToCodesInUse.R
 5a9f501a26b46a59515c7238a65e04ca *tests/testthat/test-summariseAchillesCodeUse.R
-4efc6e624dc1c66f1077bb781c4abff5 *tests/testthat/test-summariseCodeUse.R
+3330c2aee8b3d484fd291bdfad0f6a6b *tests/testthat/test-summariseCodeUse.R
 a0a4ac52aa0ea65f4ff2b724b8c22303 *tests/testthat/test-summariseOrphanCodes.R
 e38e3f97fcbbc50d131fcde19f89b386 *tests/testthat/test-synthea_sql_server.R
 fb0c7d0790bff91006de163c8af01e4f *tests/testthat/test-tableAchillesCodeUse.R
