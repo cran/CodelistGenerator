@@ -48,9 +48,8 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -363,7 +362,7 @@ codelists that contains and the class:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">attributes</span>(codelist)</span></code></pre></div>
 <div id="create-an-empty-codelist" class="section level3">
 <h3>Create an empty codelist</h3>
-<p>We can create an empty codelist using omopGenerics package:</p>
+<p>We can create an empty codelist using omopgenerics package:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>empty_codelist  <span class="ot">&lt;-</span> <span class="fu">emptyCodelist</span>()</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>empty_codelist</span></code></pre></div>
@@ -399,7 +398,7 @@ codes:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">attributes</span>(codelist_with_details)</span></code></pre></div>
 <div id="create-an-empty-codelist-with-details" class="section level3">
 <h3>Create an empty codelist with details</h3>
-<p>omopGenerics package also has a function to create an empty codelist
+<p>omopgenerics package also has a function to create an empty codelist
 with details.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>empty_codelist_with_details <span class="ot">&lt;-</span> <span class="fu">emptyCodelistWithDetails</span>()</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
@@ -431,7 +430,7 @@ containing the columns: <em>concept_id</em>, <em>excluded</em>,
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">attributes</span>(concept_set_expression)</span></code></pre></div>
 <div id="create-an-empty-concept-set-expression" class="section level3">
 <h3>Create an empty concept set expression</h3>
-<p>We can also use omopGenerics package to create an empty concept set
+<p>We can also use omopgenerics package to create an empty concept set
 expression:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>empty_concept_set_expression <span class="ot">&lt;-</span> <span class="fu">emptyConceptSetExpression</span>()</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>

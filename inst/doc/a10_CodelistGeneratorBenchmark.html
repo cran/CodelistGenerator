@@ -48,9 +48,8 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -369,20 +368,20 @@ duckdb.</p>
 <span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="fu">visOmopTable</span>(timings,</span>
 <span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>             <span class="at">hide =</span> <span class="fu">c</span>(<span class="st">&quot;variable_name&quot;</span>, <span class="st">&quot;variable_level&quot;</span>, <span class="st">&quot;strata_name&quot;</span>, <span class="st">&quot;strata_level&quot;</span>),</span>
 <span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>             <span class="at">groupColumn =</span> <span class="st">&quot;task&quot;</span>)</span></code></pre></div>
-<div id="bkispyczsn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bkispyczsn table {
+<div id="asgcflfldg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#asgcflfldg table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#bkispyczsn thead, #bkispyczsn tbody, #bkispyczsn tfoot, #bkispyczsn tr, #bkispyczsn td, #bkispyczsn th {
+#asgcflfldg thead, #asgcflfldg tbody, #asgcflfldg tfoot, #asgcflfldg tr, #asgcflfldg td, #asgcflfldg th {
 border-style: none;
 }
-#bkispyczsn p {
+#asgcflfldg p {
 margin: 0;
 padding: 0;
 }
-#bkispyczsn .gt_table {
+#asgcflfldg .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -407,11 +406,11 @@ border-left-style: solid;
 border-left-width: 3px;
 border-left-color: #E1E1E1;
 }
-#bkispyczsn .gt_caption {
+#asgcflfldg .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#bkispyczsn .gt_title {
+#asgcflfldg .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -422,7 +421,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#bkispyczsn .gt_subtitle {
+#asgcflfldg .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -433,7 +432,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#bkispyczsn .gt_heading {
+#asgcflfldg .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -444,12 +443,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#bkispyczsn .gt_bottom_border {
+#asgcflfldg .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#bkispyczsn .gt_col_headings {
+#asgcflfldg .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -463,7 +462,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#bkispyczsn .gt_col_heading {
+#asgcflfldg .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -482,7 +481,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#bkispyczsn .gt_column_spanner_outer {
+#asgcflfldg .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -493,13 +492,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#bkispyczsn .gt_column_spanner_outer:first-child {
+#asgcflfldg .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#bkispyczsn .gt_column_spanner_outer:last-child {
+#asgcflfldg .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#bkispyczsn .gt_column_spanner {
+#asgcflfldg .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -510,10 +509,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#bkispyczsn .gt_spanner_row {
+#asgcflfldg .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#bkispyczsn .gt_group_heading {
+#asgcflfldg .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -538,7 +537,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#bkispyczsn .gt_empty_group_heading {
+#asgcflfldg .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -552,13 +551,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#bkispyczsn .gt_from_md > :first-child {
+#asgcflfldg .gt_from_md > :first-child {
 margin-top: 0;
 }
-#bkispyczsn .gt_from_md > :last-child {
+#asgcflfldg .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#bkispyczsn .gt_row {
+#asgcflfldg .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -576,7 +575,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#bkispyczsn .gt_stub {
+#asgcflfldg .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -588,7 +587,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bkispyczsn .gt_stub_row_group {
+#asgcflfldg .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -601,13 +600,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#bkispyczsn .gt_row_group_first td {
+#asgcflfldg .gt_row_group_first td {
 border-top-width: 2px;
 }
-#bkispyczsn .gt_row_group_first th {
+#asgcflfldg .gt_row_group_first th {
 border-top-width: 2px;
 }
-#bkispyczsn .gt_summary_row {
+#asgcflfldg .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -616,14 +615,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bkispyczsn .gt_first_summary_row {
+#asgcflfldg .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#bkispyczsn .gt_first_summary_row.thick {
+#asgcflfldg .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#bkispyczsn .gt_last_summary_row {
+#asgcflfldg .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -632,7 +631,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#bkispyczsn .gt_grand_summary_row {
+#asgcflfldg .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -641,7 +640,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bkispyczsn .gt_first_grand_summary_row {
+#asgcflfldg .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -650,7 +649,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#bkispyczsn .gt_last_grand_summary_row_top {
+#asgcflfldg .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -659,10 +658,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#bkispyczsn .gt_striped {
+#asgcflfldg .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#bkispyczsn .gt_table_body {
+#asgcflfldg .gt_table_body {
 border-top-style: solid;
 border-top-width: 3px;
 border-top-color: #E1E1E1;
@@ -670,7 +669,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#bkispyczsn .gt_footnotes {
+#asgcflfldg .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -683,7 +682,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#bkispyczsn .gt_footnote {
+#asgcflfldg .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -691,7 +690,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bkispyczsn .gt_sourcenotes {
+#asgcflfldg .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -704,71 +703,71 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#bkispyczsn .gt_sourcenote {
+#asgcflfldg .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bkispyczsn .gt_left {
+#asgcflfldg .gt_left {
 text-align: left;
 }
-#bkispyczsn .gt_center {
+#asgcflfldg .gt_center {
 text-align: center;
 }
-#bkispyczsn .gt_right {
+#asgcflfldg .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#bkispyczsn .gt_font_normal {
+#asgcflfldg .gt_font_normal {
 font-weight: normal;
 }
-#bkispyczsn .gt_font_bold {
+#asgcflfldg .gt_font_bold {
 font-weight: bold;
 }
-#bkispyczsn .gt_font_italic {
+#asgcflfldg .gt_font_italic {
 font-style: italic;
 }
-#bkispyczsn .gt_super {
+#asgcflfldg .gt_super {
 font-size: 65%;
 }
-#bkispyczsn .gt_footnote_marks {
+#asgcflfldg .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#bkispyczsn .gt_asterisk {
+#asgcflfldg .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#bkispyczsn .gt_indent_1 {
+#asgcflfldg .gt_indent_1 {
 text-indent: 5px;
 }
-#bkispyczsn .gt_indent_2 {
+#asgcflfldg .gt_indent_2 {
 text-indent: 10px;
 }
-#bkispyczsn .gt_indent_3 {
+#asgcflfldg .gt_indent_3 {
 text-indent: 15px;
 }
-#bkispyczsn .gt_indent_4 {
+#asgcflfldg .gt_indent_4 {
 text-indent: 20px;
 }
-#bkispyczsn .gt_indent_5 {
+#asgcflfldg .gt_indent_5 {
 text-indent: 25px;
 }
-#bkispyczsn .katex-display {
+#asgcflfldg .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#bkispyczsn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#asgcflfldg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
     <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="background-color: #E1E1E1; font-family: Arial; font-size: 10; text-align: center; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="col" id="CDM-name">CDM name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="background-color: #E1E1E1; font-family: Arial; font-size: 10; text-align: center; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="col" id="Data-source">Data source</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="background-color: #E1E1E1; font-family: Arial; font-size: 10; text-align: center; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="col" id="Dbms">Dbms</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="background-color: #E1E1E1; font-family: Arial; font-size: 10; text-align: center; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="col" id="N-person">N person</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="background-color: #E1E1E1; font-family: Arial; font-size: 10; text-align: center; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="col" id="N-concepts">N concepts</th>
@@ -780,7 +779,7 @@ height: 0px !important;
     <tr class="gt_group_heading_row">
       <th colspan="6" class="gt_group_heading" style="background-color: #E9E9E9; font-family: Arial; font-size: 10; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="colgroup" id="Getting drug ingredient codes (acetaminophen, codeine, adalimumab)">Getting drug ingredient codes (acetaminophen, codeine, adalimumab)</th>
     </tr>
-    <tr class="gt_row_group_first"><td headers="Getting drug ingredient codes (acetaminophen, codeine, adalimumab)  CDM name" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Eunomia Synpuf</td>
+    <tr class="gt_row_group_first"><td headers="Getting drug ingredient codes (acetaminophen, codeine, adalimumab)  Data source" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Eunomia Synpuf</td>
 <td headers="Getting drug ingredient codes (acetaminophen, codeine, adalimumab)  Dbms" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">duckdb</td>
 <td headers="Getting drug ingredient codes (acetaminophen, codeine, adalimumab)  N person" class="gt_row gt_right" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">1,000</td>
 <td headers="Getting drug ingredient codes (acetaminophen, codeine, adalimumab)  N concepts" class="gt_row gt_right" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">6,224,227</td>
@@ -789,7 +788,7 @@ height: 0px !important;
     <tr class="gt_group_heading_row">
       <th colspan="6" class="gt_group_heading" style="background-color: #E9E9E9; font-family: Arial; font-size: 10; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="colgroup" id="Getting atc codes (atc 1st level, 1 name of interest)">Getting atc codes (atc 1st level, 1 name of interest)</th>
     </tr>
-    <tr class="gt_row_group_first"><td headers="Getting atc codes (atc 1st level, 1 name of interest)  CDM name" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Eunomia Synpuf</td>
+    <tr class="gt_row_group_first"><td headers="Getting atc codes (atc 1st level, 1 name of interest)  Data source" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Eunomia Synpuf</td>
 <td headers="Getting atc codes (atc 1st level, 1 name of interest)  Dbms" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">duckdb</td>
 <td headers="Getting atc codes (atc 1st level, 1 name of interest)  N person" class="gt_row gt_right" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">1,000</td>
 <td headers="Getting atc codes (atc 1st level, 1 name of interest)  N concepts" class="gt_row gt_right" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">6,224,227</td>
@@ -798,14 +797,13 @@ height: 0px !important;
     <tr class="gt_group_heading_row">
       <th colspan="6" class="gt_group_heading" style="background-color: #E9E9E9; font-family: Arial; font-size: 10; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="colgroup" id="Getting candidate codes for dementia, excluding `child`, within all domains, and all options set to true">Getting candidate codes for dementia, excluding `child`, within all domains, and all options set to true</th>
     </tr>
-    <tr class="gt_row_group_first"><td headers="Getting candidate codes for dementia, excluding `child`, within all domains, and all options set to true  CDM name" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Eunomia Synpuf</td>
+    <tr class="gt_row_group_first"><td headers="Getting candidate codes for dementia, excluding `child`, within all domains, and all options set to true  Data source" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Eunomia Synpuf</td>
 <td headers="Getting candidate codes for dementia, excluding `child`, within all domains, and all options set to true  Dbms" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">duckdb</td>
 <td headers="Getting candidate codes for dementia, excluding `child`, within all domains, and all options set to true  N person" class="gt_row gt_right" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">1,000</td>
 <td headers="Getting candidate codes for dementia, excluding `child`, within all domains, and all options set to true  N concepts" class="gt_row gt_right" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">6,224,227</td>
 <td headers="Getting candidate codes for dementia, excluding `child`, within all domains, and all options set to true  Estimate name" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">time_taken_minutes</td>
 <td headers="Getting candidate codes for dementia, excluding `child`, within all domains, and all options set to true  Estimate value" class="gt_row gt_right" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">0.04</td></tr>
   </tbody>
-  
   
 </table>
 </div>

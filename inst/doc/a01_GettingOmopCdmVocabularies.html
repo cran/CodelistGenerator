@@ -48,9 +48,8 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -408,10 +407,10 @@ select all available vocabularies.</p>
 <p>After downloading the vocabularies you will have a set of csvs (along
 with a tool to add the CPT-4 codes if you wish). To quickly create a
 duckdb vocab database you could use the following code. Here, after
-pointing to the unzipped folder containg the csvs, we’ll read each table
-into memory and write them to a duckdb database which we’ll save in the
-same folder. We’ll also add an empty person and observation period table
-so that you can create a cdm reference at the end.</p>
+pointing to the unzipped folder containing the csvs, we’ll read each
+table into memory and write them to a duckdb database which we’ll save
+in the same folder. We’ll also add an empty person and observation
+period table so that you can create a cdm reference at the end.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
